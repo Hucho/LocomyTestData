@@ -1,0 +1,10 @@
+{
+"name": "starterApp",
+"main": "server.js",
+"dependencies": {
+	"express": "latest",
+	"mongoose": "latest",
+	"body-Parser": "latest",
+	"method-override": "latest"
+	}
+}
