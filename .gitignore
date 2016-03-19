@@ -49,4 +49,4 @@ Temporary Items
 .apdisk
 
 node_modules/
-public/libs
+public/libs/*
