@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 //define locomy model
 //module.exports allows us to pass this to other files when it is called
+
 module.exports = mongoose.model('product', {
 
 	id: Number,
@@ -72,6 +73,8 @@ module.exports = mongoose.model('product_shipping', {
 
 module.exports = mongoose.model('product_category',{}, 'product_category');
 
+module.exports = mongoose.model('product_custom_attributes',{}, 'product_custom_attributes');
+
 module.exports = mongoose.model('product_activity_log',{}, 'product_activity_log');
 
 module.exports = mongoose.model('product_shop',{}, 'product_shop');
@@ -90,14 +93,12 @@ module.exports = mongoose.model('messenger_activity_log',{}, 'messenger_activity
 
 module.exports = mongoose.model('user_actvity_log',{}, 'user_actvity_log');
 
-module.exports = mongoose.model('shop_rating',{}, 'shop_rating');
+module.exports = mongoose.model('user_lp',{}, 'user_lp');
 
-module.exports = mongoose.model('shop_rating',{}, 'shop_rating');
+module.exports = mongoose.model('user_config',{}, 'user_config');
 
-module.exports = mongoose.model('shop_rating',{}, 'shop_rating');
+module.exports = mongoose.model('spatial_ref_sys',{}, 'spatial_ref_sys');
 
-module.exports = mongoose.model('shop_rating',{}, 'shop_rating');
+module.exports = mongoose.model('system_setting',{}, 'system_setting');
 
-module.exports = mongoose.model('shop_rating',{}, 'shop_rating');
 
-module.exports = mongoose.model('shop_rating',{}, 'shop_rating');
