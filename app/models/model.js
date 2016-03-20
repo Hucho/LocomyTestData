@@ -12,8 +12,12 @@ module.exports = mongoose.model('product', {
 	title: String,
 	description: String,
 	creation_date: {type: Date, default: Date.now},
+
+	//timestamp is not modeled correctly
 	creation_time: {type: Date, default: Date.now},
 	modification_date: {type: Date, default: Date.now},
+
+	//timestamp is not modeled correctly
 	modification_time: {type: Date, default: Date.now},
 	is_visible: Boolean,
 	in_stock: Number,
@@ -69,27 +73,120 @@ module.exports = mongoose.model('product_shipping', {
 	shipping_height: Number,
 	shipping_height_unit: String,
 	shipping_label: String,
-	shipping_areas: {xx: Number, yy: Number} }, 'product_shipping');
+	shipping_areas: [{area: String, zip_code: Number}] }, 'product_shipping');
 
-module.exports = mongoose.model('product_category',{}, 'product_category');
+module.exports = mongoose.model('product_category',{
 
-module.exports = mongoose.model('product_custom_attributes',{}, 'product_custom_attributes');
+	id: Number,
+	category_id: Number,
+	name: String,
+	desciption: String
 
-module.exports = mongoose.model('product_activity_log',{}, 'product_activity_log');
+}, 'product_category');
 
-module.exports = mongoose.model('product_shop',{}, 'product_shop');
+module.exports = mongoose.model('product_custom_attributes',{
 
-module.exports = mongoose.model('shop',{}, 'shop');
+	id: Number,
+	name: String,
+	type: String,
+	unit: String,
+	value: String,
+	product_id: Number
 
-module.exports = mongoose.model('shop_rating',{}, 'shop_rating');
+}, 'product_custom_attributes');
 
-module.exports = mongoose.model('product_review',{}, 'product_review');
+module.exports = mongoose.model('product_activity_log',{
 
-module.exports = mongoose.model('product_user',{}, 'product_user');
+	id: Number,
+	product_id: Number,
+	key: String,
+	value: String,
+	date: Date,
 
-module.exports = mongoose.model('user',{}, 'user');
+	//timestamp is not modeled correctly
+	time: {type: Date, default: Date.now}
 
-module.exports = mongoose.model('messenger_activity_log',{}, 'messenger_activity_log');
+}, 'product_activity_log');
+
+module.exports = mongoose.model('product_shop',{
+
+	id: Number,
+	product_id: Number,
+	shop_id: Number
+
+}, 'product_shop');
+
+module.exports = mongoose.model('shop',{
+
+	id: Number,
+	name: String,
+	phone: String,
+	fax: String,
+	email: String,
+	website: String,
+	address: String,
+	x: Number,
+	y: Number,
+	geom: [{x: Number, y: Number}]
+
+}, 'shop');
+
+module.exports = mongoose.model('shop_rating',{
+
+	id: Number,
+	shop_id: Number,
+	rate: Number,
+	description: String
+
+}, 'shop_rating');
+
+module.exports = mongoose.model('product_review',{
+
+	id: Number,
+	user_id: Number,
+	product_id: Number,
+	comment: String
+
+}, 'product_review');
+
+module.exports = mongoose.model('product_user',{
+
+	id: Number,
+	product_id: Number,
+	user_id: Number
+
+}, 'product_user');
+
+module.exports = mongoose.model('user',{
+
+	id: Number,
+	username: String,
+	password: String,
+	name: String,
+	age: Number,
+	sex: Boolean,
+	mobile: String,
+	address: String,
+	is_provider: Boolean,
+	is_admin_provider: Boolean,
+	jid: String,
+	user_location: [{x: Number, y: Number}]
+
+}, 'user');
+
+module.exports = mongoose.model('messenger_activity_log',{
+//continue work...
+	id: int4
+	sender_user_id: int4
+	sender_jid: varchar(0)
+	receiver_user_id: int4
+	receiver_jid: varchar(0)
+	sid: varchar(0)
+	rid: varchar(0)
+	creation_time: timestamp(6)
+	termination_time: timestamp(6)
+
+}, 'messenger_activity_log');
 
 module.exports = mongoose.model('user_actvity_log',{}, 'user_actvity_log');
 
