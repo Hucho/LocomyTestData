@@ -1,8 +1,8 @@
 // app/routes.js
 
-//grab the nerd model we just created
+//grab the Products model
 
-var Nerd = require('./models/nerd');
+var Products = require('./models/locomyDB');
 
 	module.exports = function(app){
 		//server routes =====================================
@@ -11,17 +11,17 @@ var Nerd = require('./models/nerd');
 		
 		//sample api routeEvents
 		
-		app.get('api/nerds', function(req,res){
+		app.get('/product', function(req,res){
 			
-			//user mongoose to get all nerds in the database
-			Nerd.find(function(err,nerds){
+			//user mongoose to get all products in the database
+			product.find(function(err,products){
 				//if there is an error retrieving, send the error.
 				//nothing after res.send(err) will execute
 				
 				if(err)
 					res.send(err);
 				
-				res.json(nerds);//return all nerds in Json format
+				res.json(products);//return all products in Json format
 			});
 			
 			

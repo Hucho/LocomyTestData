@@ -18,7 +18,15 @@ var db = require('./config/db');
 var port = process.env.PORT || 3000;
 
 //connect to our mongoDB database
-mongoose.connect(db.url);
+mongoose.connect(db.url, function(err,db){
+
+	if(err) {console.log(err);}
+
+	else {console.log("mongoDB connection successfully established!")}
+});
+
+//validate mongoDB connection
+
 
 //get all data/stuff of the body (POST) parameters
 //parse application/json
@@ -40,7 +48,7 @@ app.use(express.static(__dirname + '/public'));
 require('./app/routes')(app); //configure routes
 
 //start app ===================================================
-//startup app at http://localhost:8080
+//startup app at http://localhost: 3000
 app.listen(port);
 
 //shoutout to the user

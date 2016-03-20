@@ -2,8 +2,7 @@
 //grab the mongoose module
 var mongoose = require('mongoose');
 
-//define locomy model
-//module.exports allows us to pass this to other files when it is called
+//define and export locomyDB model
 
 module.exports = mongoose.model('product', {
 
@@ -19,10 +18,14 @@ module.exports = mongoose.model('product', {
 
 	//timestamp is not modeled correctly
 	modification_time: {type: Date, default: Date.now},
+
 	is_visible: Boolean,
 	in_stock: Number,
 	identifier_exists: Boolean,
-	is-bundle: Boolean,
+
+	//"-" replaced with "_"
+	is_bundle: Boolean,
+	
 	link: String,
 	mobile_link: String,
 	image_link: String,
@@ -73,6 +76,8 @@ module.exports = mongoose.model('product_shipping', {
 	shipping_height: Number,
 	shipping_height_unit: String,
 	shipping_label: String,
+
+	//shipping_areas definition may be changed
 	shipping_areas: [{area: String, zip_code: Number}] }, 'product_shipping');
 
 module.exports = mongoose.model('product_category',{
@@ -175,27 +180,75 @@ module.exports = mongoose.model('user',{
 }, 'user');
 
 module.exports = mongoose.model('messenger_activity_log',{
-//continue work...
-	id: int4
-	sender_user_id: int4
-	sender_jid: varchar(0)
-	receiver_user_id: int4
-	receiver_jid: varchar(0)
-	sid: varchar(0)
-	rid: varchar(0)
-	creation_time: timestamp(6)
-	termination_time: timestamp(6)
+
+	id: Number,
+	sender_user_id: Number,
+	sender_jid: String,
+	receiver_user_id: Number,
+	receiver_jid: String,
+	sid: String,
+	rid: String,
+
+	//timestamp may not be modeled correctly
+	creation_time: {type: Date, default: Date.now},
+	termination_time: {type: Date, default: Date.now}
 
 }, 'messenger_activity_log');
 
-module.exports = mongoose.model('user_actvity_log',{}, 'user_actvity_log');
+module.exports = mongoose.model('user_actvity_log',{
 
-module.exports = mongoose.model('user_lp',{}, 'user_lp');
+	id: Number,
+	sender_user_id: Number,
+	sender_jid: String,
+	receiver_user_id: Number,
+	receiver_jid: String,
+	sid: String,
+	rid: String,
 
-module.exports = mongoose.model('user_config',{}, 'user_config');
+//timestamp may not be modeled correctly
+	creation_time: {type: Date, default: Date.now},
+	termination_time: {type: Date, default: Date.now}
 
-module.exports = mongoose.model('spatial_ref_sys',{}, 'spatial_ref_sys');
+}, 'user_actvity_log');
 
-module.exports = mongoose.model('system_setting',{}, 'system_setting');
+module.exports = mongoose.model('user_lp',{
+
+	id: Number,
+	user_id: Number,
+	balance: Number,
+	expiration_date: Date,
+	shop_id: Number,
+	product_id: Number
+
+}, 'user_lp');
+
+module.exports = mongoose.model('user_config',{
+
+	id: Number,
+	user_id: Number,
+	key: String,
+	value: String,
+	description: String
+
+}, 'user_config');
+
+module.exports = mongoose.model('spatial_ref_sys',{
+
+	srid: Number,
+	auth_name: String,
+	auth_srid: Number,
+	srtext: String,
+	proj4text: String
+
+}, 'spatial_ref_sys');
+
+module.exports = mongoose.model('system_setting',{
+
+	id: Number,
+	key: String,
+	value: String,
+	description: String
+
+}, 'system_setting');
 
 
