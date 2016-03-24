@@ -1,10 +1,7 @@
 // app/models/locomyDB.js
-//grab the mongoose module
-var mongoose = require('mongoose');
-
-//define and export locomyDB model
-
-module.exports = mongoose.model('product', {
+module.exports = function(mongoose, Schema){ 
+//define locomyDB model
+var product = new Schema ({
 
 	id: Number,
 	category_id:Number,
@@ -25,7 +22,7 @@ module.exports = mongoose.model('product', {
 
 	//"-" replaced with "_"
 	is_bundle: Boolean,
-	
+
 	link: String,
 	mobile_link: String,
 	image_link: String,
@@ -52,16 +49,16 @@ module.exports = mongoose.model('product', {
 	size_type: String,
 	size_system: String,
 	online_only: Boolean,
-	locomy_point: Number},'product');
+	locomy_point: Number}, {collection: 'product'});
 
-module.exports = mongoose.model('product_rating', {
+var product_rating = new Schema ({
 
 	id: Number,
 	product_id: Number,
 	rate: Number,
-	description: String},'product_rating');
+	description: String}, {collection:'product_rating'});
 
-module.exports = mongoose.model('product_shipping', {
+var product_shipping = new Schema ({
 
 	id: Number,
 	product_id: Number,
@@ -75,32 +72,28 @@ module.exports = mongoose.model('product_shipping', {
 	shipping_width_unit: String,
 	shipping_height: Number,
 	shipping_height_unit: String,
-	shipping_label: String,
+	shipping_label: [{shipping_area_id: Number}],
 
 	//shipping_areas definition may be changed
-	shipping_areas: [{area: String, zip_code: Number}] }, 'product_shipping');
+	shipping_areas: [{area: String, zip_code: Number}] }, {collection: 'product_shipping'});
 
-module.exports = mongoose.model('product_category',{
+var product_category = new Schema ({
 
 	id: Number,
 	category_id: Number,
 	name: String,
-	desciption: String
+	desciption: String }, {collection: 'product_category'});
 
-}, 'product_category');
-
-module.exports = mongoose.model('product_custom_attributes',{
+var product_custom_attribute = new Schema ({
 
 	id: Number,
 	name: String,
 	type: String,
 	unit: String,
 	value: String,
-	product_id: Number
+	product_id: Number }, {collection: 'product_custom_attributes'});
 
-}, 'product_custom_attributes');
-
-module.exports = mongoose.model('product_activity_log',{
+var product_activity_log = new Schema ({
 
 	id: Number,
 	product_id: Number,
@@ -109,19 +102,15 @@ module.exports = mongoose.model('product_activity_log',{
 	date: Date,
 
 	//timestamp is not modeled correctly
-	time: {type: Date, default: Date.now}
+	time: {type: Date, default: Date.now} }, {collection: 'product_activity_log'});
 
-}, 'product_activity_log');
-
-module.exports = mongoose.model('product_shop',{
+var product_shop = new Schema ({
 
 	id: Number,
 	product_id: Number,
-	shop_id: Number
+	shop_id: Number }, {collection: 'product_shop'});
 
-}, 'product_shop');
-
-module.exports = mongoose.model('shop',{
+var shop = new Schema ({
 
 	id: Number,
 	name: String,
@@ -132,37 +121,29 @@ module.exports = mongoose.model('shop',{
 	address: String,
 	x: Number,
 	y: Number,
-	geom: [{x: Number, y: Number}]
+	geom: [{x: Number, y: Number}] }, {collection: 'shop'});
 
-}, 'shop');
-
-module.exports = mongoose.model('shop_rating',{
+var shop_rating = new Schema ({
 
 	id: Number,
 	shop_id: Number,
 	rate: Number,
-	description: String
+	description: String }, {collection: 'shop_rating'});
 
-}, 'shop_rating');
-
-module.exports = mongoose.model('product_review',{
+var product_review = new Schema ({
 
 	id: Number,
 	user_id: Number,
 	product_id: Number,
-	comment: String
+	comment: String }, {collection: 'product_review'});
 
-}, 'product_review');
-
-module.exports = mongoose.model('product_user',{
+var product_user = new Schema ({
 
 	id: Number,
 	product_id: Number,
-	user_id: Number
+	user_id: Number }, {collection: 'product_user'});
 
-}, 'product_user');
-
-module.exports = mongoose.model('user',{
+var user = new Schema ({
 
 	id: Number,
 	username: String,
@@ -175,11 +156,9 @@ module.exports = mongoose.model('user',{
 	is_provider: Boolean,
 	is_admin_provider: Boolean,
 	jid: String,
-	user_location: [{x: Number, y: Number}]
+	user_location: [{x: Number, y: Number}] }, {collection: 'user'});
 
-}, 'user');
-
-module.exports = mongoose.model('messenger_activity_log',{
+var messenger_activity_log = new Schema ({
 
 	id: Number,
 	sender_user_id: Number,
@@ -191,11 +170,9 @@ module.exports = mongoose.model('messenger_activity_log',{
 
 	//timestamp may not be modeled correctly
 	creation_time: {type: Date, default: Date.now},
-	termination_time: {type: Date, default: Date.now}
+	termination_time: {type: Date, default: Date.now} }, {collection: 'messenger_activity_log'});
 
-}, 'messenger_activity_log');
-
-module.exports = mongoose.model('user_actvity_log',{
+var user_actvity_log = new Schema ({
 
 	id: Number,
 	sender_user_id: Number,
@@ -204,14 +181,12 @@ module.exports = mongoose.model('user_actvity_log',{
 	receiver_jid: String,
 	sid: String,
 	rid: String,
-
-//timestamp may not be modeled correctly
+	
+	//timestamp may not be modeled correctly
 	creation_time: {type: Date, default: Date.now},
-	termination_time: {type: Date, default: Date.now}
+	termination_time: {type: Date, default: Date.now} }, {collection: 'user_actvity_log'});
 
-}, 'user_actvity_log');
-
-module.exports = mongoose.model('user_lp',{
+var user_lp = new Schema ({
 
 	id: Number,
 	user_id: Number,
@@ -220,9 +195,9 @@ module.exports = mongoose.model('user_lp',{
 	shop_id: Number,
 	product_id: Number
 
-}, 'user_lp');
+	}, {collection: 'user_lp'});
 
-module.exports = mongoose.model('user_config',{
+var user_config = new Schema ({
 
 	id: Number,
 	user_id: Number,
@@ -230,9 +205,9 @@ module.exports = mongoose.model('user_config',{
 	value: String,
 	description: String
 
-}, 'user_config');
+	}, {collection: 'user_config'});
 
-module.exports = mongoose.model('spatial_ref_sys',{
+var spatial_ref_sy = new Schema ({
 
 	srid: Number,
 	auth_name: String,
@@ -240,15 +215,40 @@ module.exports = mongoose.model('spatial_ref_sys',{
 	srtext: String,
 	proj4text: String
 
-}, 'spatial_ref_sys');
+	}, {collection: 'spatial_ref_sys'});
 
-module.exports = mongoose.model('system_setting',{
+var system_setting = new Schema ({
 
 	id: Number,
 	key: String,
 	value: String,
 	description: String
 
-}, 'system_setting');
+	}, {collection: 'system_setting'});
 
+var models = {
 
+	products: mongoose.model('products', product),
+	product_ratings: mongoose.model('product_ratings', product_rating),
+	product_shippings: mongoose.model('product_shippings', product_shipping),
+	product_categorys: mongoose.model('product_categorys', product_category),
+	product_custom_attributes: mongoose.model('product_custom_attributes', product_custom_attribute),
+	product_activity_logs: mongoose.model('product_activity_logs', product_activity_log),
+	product_shops: mongoose.model('product_shops', product_shop),
+	shops: mongoose.model('shops', shop),
+	shop_ratings: mongoose.model('shop_ratings', shop_rating),
+	product_reviews: mongoose.model('product_reviews', product_review),
+	product_users: mongoose.model('product_users', product_user),
+	users: mongoose.model('users', user),
+	messenger_activity_logs: mongoose.model('messenger_activity_logs', messenger_activity_log),
+	user_actvity_logs: mongoose.model('user_actvity_logs', user_actvity_log),
+	user_lps: mongoose.model('user_lps', user_lp),
+	user_configs: mongoose.model('user_configs', user_config),
+	spatial_ref_sys: mongoose.model('spatial_ref_sys', spatial_ref_sy),
+	system_settings: mongoose.model('system_settings', system_setting)
+
+	};
+
+return models;
+
+};
