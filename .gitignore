@@ -50,3 +50,7 @@ Temporary Items
 
 node_modules/
 public/libs/*
+config
+amazon
+
+
