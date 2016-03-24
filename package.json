@@ -1,11 +1,11 @@
 {
-"name": "starterApp",
+"name": "locomyTestDataApp",
 "main": "server.js",
 "dependencies": {
 	"express": "latest",
 	"mongoose": "latest",
 	"body-Parser": "latest",
 	"method-override": "latest",
-	"amazon-product-api": "0.3.9"
+	"apac": "latest"
 	}
 }
