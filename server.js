@@ -31,8 +31,8 @@ var opHelper = new OperationHelper({
 
 	opHelper.execute('ItemSearch', {
 	  'SearchIndex': 'SportingGoods',
-	  'Title': 'Soccer Ball',
-	  'KeyWords': 'Soccer',
+	  'Title': 'Marathon Shoe',
+	  'KeyWords': 'Shoe',
 	  'ResponseGroup': 'ItemAttributes',
 	  'sort': 'relevance'
 
@@ -41,32 +41,61 @@ var opHelper = new OperationHelper({
 		if(err) {console.log(err);}
 
 		else {
-
-			console.log(typeof(results));
-			
-			for (var numOfitems = 0; numOfitems < results.ItemSearchResponse.Items[0].Item.length; numOfitems ++)	{
+				
+			for (var numOfitems = 0; numOfitems < results.ItemSearchResponse.Items[0].Item.length; numOfitems ++) {
 			 
-			 console.log(results.ItemSearchResponse.Items[0].Item[numOfitems].ItemAttributes[0].Title);
+			 console.log("Title: " + results.ItemSearchResponse.Items[0].Item[numOfitems].ItemAttributes[0].Title);
+			 
 			 var newProduct = new models.products({
-
 			 		title: results.ItemSearchResponse.Items[0].Item[numOfitems].ItemAttributes[0].Title
-			 });
+			 	});
 
-			 newProduct.save(function(err){
+				 newProduct.save(function(err){
 
-			if (err) {console.log(err);}
-			else {console.log(newProduct);}
+					if (err) {console.log(err);}
+					});
+				 console.log("mongoDB save: ");
+				 console.log(newProduct);
 
-			});
 
-
-			}
+			};
 
 		}
 		
 	});
 
 //send request to browser
+
+app.get('/test', function(req, res){
+
+	opHelper.execute('ItemSearch', {
+	  'SearchIndex': 'SportingGoods',
+	  'Title': 'Ball',
+	  'KeyWords': 'Football',
+	  'ResponseGroup': 'ItemAttributes',
+	  'sort': 'relevance'
+
+	}, function(err, results){
+		
+		if(err) {console.log(err);}
+		else { res.json(results);}
+		}
+	);
+
+});
+
+//send mongo entries to browser
+
+app.get('/products', function(req,res){
+
+	console.log("Products are requested!");
+	models.products.find(function(err, docs){
+		console.log(docs);
+		res.json(docs);
+	});
+
+
+});
 
 //enter new rating
 // var rating = new models.product_ratings({
@@ -129,7 +158,7 @@ app.use(express.static(__dirname + '/public'));
 
 //routes ======================================================
 
-require('./app/routes')(app); //configure routes
+//require('./app/routes')(app); //configure routes
 
 //start app ===================================================
 //startup app at http://localhost: 3000
