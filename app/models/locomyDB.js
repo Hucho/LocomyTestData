@@ -3,8 +3,10 @@ module.exports = function(mongoose, Schema){
 //define locomyDB model
 var product = new Schema ({
 
-	id: Number,
-	category_id:Number,
+	// id changed from Number to StringS
+	id: String,
+	//category_id changed to String
+	category_id: String,
 	title: String,
 	description: String,
 	creation_date: {type: Date, default: Date.now},

@@ -30,10 +30,13 @@ var amazon = new AmazonApi({
 amazon.getItemsInBrowseNode ({
 
 	  'SearchIndex': 'SportingGoods',
-	  'Title': 'Tennis Shoe',
+	  'Title': 'club',
 	  'KeyWords': 'Shoe',
-	  'ResponseGroup': 'ItemAttributes',
-	  'sort': 'relevance'
+	  'MinimumPrice': '40000',
+	  'MaximumPrice': '50000',
+	  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
+	  'sort': 'relevance',
+	  'locale': 'http://www.amazon.com'
 
 	}, function(err, results) {
 		
@@ -44,9 +47,45 @@ amazon.getItemsInBrowseNode ({
 			for (var numOfitems = 0; numOfitems < results.ItemSearchResponse.Items.Item.length; numOfitems ++) {
 			 
 			 console.log("Title: " + results.ItemSearchResponse.Items.Item[numOfitems].ItemAttributes.Title);
-			 
+				
+				//handle problem with undefined item properties
+				function undefinedField (field){
+
+					var value = String;
+
+			 			if (field == undefined)
+			 				{value ="";}
+
+			 			else if (field.constructor == Array) {value = field.join(',');}
+
+			 			else if (field.constructor == Object) {value = field;}
+
+			 		return value;
+			 	}
+
+				//handle problem with BrowseNodes
+				function browseNodeHandler(browsenode){
+
+					if(browsenode.constructor == Object){return browsenode.BrowseNodeId}
+					else if(browsenode.constructor == Array){return browsenode[0].BrowseNodeId}
+				}
+				//handle problems with undefined prices
+				function undefinedPrices(price){
+					if(price.ListPrice == undefined) {return "";}
+					else {return price.ListPrice.Amount}
+				}
+
+
+			//map http request to mongoose model	
 			 var newProduct = new models.products({
-			 		title: results.ItemSearchResponse.Items.Item[numOfitems].ItemAttributes.Title
+
+			 		id: results.ItemSearchResponse.Items.Item[numOfitems].ASIN,
+			 		category_id: browseNodeHandler (results.ItemSearchResponse.Items.Item[numOfitems].BrowseNodes.BrowseNode),
+			 		title: results.ItemSearchResponse.Items.Item[numOfitems].ItemAttributes.Title,
+			 		description: undefinedField (results.ItemSearchResponse.Items.Item[numOfitems].ItemAttributes.Feature),
+			 		image_link: undefinedField (results.ItemSearchResponse.Items.Item[numOfitems].MediumImage).URL,
+			 		brand: results.ItemSearchResponse.Items.Item[numOfitems].ItemAttributes.Manufacturer,
+			 		price: undefinedPrices (results.ItemSearchResponse.Items.Item[numOfitems].ItemAttributes)
 			 	});
 
 				 newProduct.save(function(err){
@@ -70,10 +109,13 @@ app.get('/test', function(req, res){
 amazon.getItemsInBrowseNode ({
 
 	  'SearchIndex': 'SportingGoods',
-	  'Title': 'Tennis Shoe',
+	  'Title': 'club',
 	  'KeyWords': 'Shoe',
-	  'ResponseGroup': 'ItemAttributes',
-	  'sort': 'relevance'
+	  'MinimumPrice': '40000',
+	  'MaximumPrice': '50000',
+	  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
+	  'sort': 'relevance',
+	  'locale': 'http://www.amazon.com'
 
 
 	}, function(err, results){
@@ -85,7 +127,7 @@ amazon.getItemsInBrowseNode ({
 
 });
 
-//send mongo entries to browser
+//send mongo entries to browser with client side
 
 app.get('/products', function(req,res){
 
@@ -97,6 +139,18 @@ app.get('/products', function(req,res){
 
 
 });
+
+app.get('/Json', function(req,res){
+
+	console.log("Products are requested!");
+	models.products.find(function(err, docs){
+		console.log(docs);
+		res.json(docs);
+	});
+
+
+});
+
 
 //get all data/stuff of the body (POST) parameters
 //parse application/json
@@ -113,6 +167,7 @@ app.use(methodOverride("X-HTTP-Method-Override"));
 
 //set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));
+
 
 //routes ======================================================
 

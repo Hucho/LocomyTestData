@@ -3,10 +3,10 @@ function AppCtrl($scope, $http){
 	
 var refresh = function(){
 		
-		$http.get('/contactlist').success(function(response){
+		$http.get('/products').success(function(response){
 			console.log("I got the data I requested");
-			$scope.contactlist = response;
-			$scope.contact = "";
+			$scope.products = response;
+			$scope.product = "";
 		});
 				
 };
