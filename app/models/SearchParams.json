@@ -1,0 +1,17 @@
+[ 
+	{	"SearchIndex": "Wine",
+		"Title": "Wine",
+		"MinimumPrice": 5000,
+		"MaximumPrice": 1000000,
+		"KeyWords": "Red Wine, White Wine, Bordeaux"
+	},
+
+	{
+		"SearchIndex": "Wireless",
+		"Title": "Wireless",
+		"MinimumPrice": 100,
+		"MaximumPrice": 1000000,
+		"KeyWords": "Wifi, Cisco, Router"
+	}
+
+]
