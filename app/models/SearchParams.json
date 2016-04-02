@@ -1,8 +1,8 @@
 [ 
 	{	"SearchIndex": "Wine",
 		"Title": "Wine",
-		"MinimumPrice": 5000,
-		"MaximumPrice": 1000000,
+		"MinimumPrice": 500,
+		"MaximumPrice": 100000,
 		"KeyWords": "Red Wine, White Wine, Bordeaux"
 	},
 
@@ -10,8 +10,16 @@
 		"SearchIndex": "Wireless",
 		"Title": "Wireless",
 		"MinimumPrice": 100,
-		"MaximumPrice": 10000,
+		"MaximumPrice": 500000,
 		"KeyWords": "Wifi, Cisco, Router"
+	},
+	{
+		"SearchIndex": "Toys",
+		"Title": "Doll",
+		"MinimumPrice": 500,
+		"MaximumPrice": 100000,
+		"KeyWords": "Baby, Child"
 	}
+
 
 ]
