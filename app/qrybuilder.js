@@ -99,7 +99,6 @@ function qryBuilder (){
 
 
 	}
-
 	return builtQryArray;
 }
 

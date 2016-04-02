@@ -10,7 +10,7 @@
 		"SearchIndex": "Wireless",
 		"Title": "Wireless",
 		"MinimumPrice": 100,
-		"MaximumPrice": 1000000,
+		"MaximumPrice": 10000,
 		"KeyWords": "Wifi, Cisco, Router"
 	}
 
