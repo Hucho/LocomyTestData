@@ -7,27 +7,48 @@ var bodyParser = require("body-Parser");
 var methodOverride = require("method-override");
 var util = require('util');
 var runQueries = require('./app/qryHandler');
+//require mongo stuff
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+/*require locomyDB model from qryHandler module,
+because it can only be once compiled*/
+var models = require('./app/qryHandler').models;
 
-//rund Queries against Amazon API and save results
-//to MongoDB
+/*rund Queries against Amazon API and save results
+to MongoDB*/
 runQueries();
 
-function resToBrowser(){
-
-	app.get('/', function(req,res){
-
+/*function which brings the results from Amazon in the MongoDB to the Browser
+to confirm that data has been written*/
+function resToClientSide(){
+	//set mongoDB connection
+	mongoose.connect('mongodb://localhost/locomyDB');
+	mongoose.connection.on('error', console.error.bind('connection error'));
+	mongoose.connection.once('open', function(){
+		console.log("Connection to MongoDB successfully established!")
+	})
+	app.get('/products', function(req,res){
 		console.log("Products are requested!");
-		/*model may not be defined due to re-compiling problem
-		with runQueries function*/
 		models.products.find(function(err, docs){
 			console.log(docs);
 			res.json(docs);
+			mongoose.connection.close(function(){
+			console.log('MongoDB connection closed');
+			});
 		});
 
-		});
+	});
 }
 
-resToBrowser();
+resToClientSide();
+
+//close all MongoConnections if process shuts down
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Mongoose disconnected on app termination');
+    process.exit(0);
+  });
+});
 
 //parse application/json
 app.use(bodyParser.json());
@@ -43,10 +64,6 @@ app.use(methodOverride("X-HTTP-Method-Override"));
 
 //set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));
-
-//routes ======================================================
-
-//require('./app/routes')(app); //configure routes
 
 //set our port =================================================
 var port = process.env.PORT || 3000;

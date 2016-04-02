@@ -6,6 +6,7 @@
 	"mongoose": "latest",
 	"body-Parser": "latest",
 	"method-override": "latest",
-	"apac": "latest"
+	"apac": "latest",
+	"util": "latest"
 	}
 }

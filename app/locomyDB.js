@@ -1,4 +1,4 @@
-// app/models/locomyDB.js
+// app/locomyDB.js
 module.exports = function(mongoose, Schema){ 
 //define locomyDB model
 var product = new Schema ({

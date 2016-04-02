@@ -1,5 +1,5 @@
-//qrybuilder.js
-var json = require('./models/SearchParams.json');
+//app/qrybuilder.js
+var json = require('./SearchParams.json');
 
 //init qry template with default values
 function qryInit () {

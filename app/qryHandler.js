@@ -1,22 +1,33 @@
+//app/qryHandler.js
 //QueryHandler: This code takes an array from the qryBuilder and tries to handle
 //the request to the Amazon API
 //require array from qrybuilder function
 var OperationHelper = require('apac').OperationHelper;
 var Credentials = require('../config/credentials');
+
 //requrie function which builds the Querry Array
 var QueryBuilder = require('../app/qrybuilder');
+
 //require mongoDB stuff
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var models = require('../app/models/locomyDB.js')(mongoose, Schema);
+var models = require('../app/locomyDB.js')(mongoose, Schema);
 var app = require('../server.js');
 
-//set mongoDB connection
+//open mongoDB connection and check if it is successfully runnning
 mongoose.connect('mongodb://localhost/locomyDB');
 mongoose.connection.on('error', console.error.bind('connection error'));
 mongoose.connection.once('open', function(){
-	console.log("Connection to MongoDB successfully established!")
-})
+console.log("Connection to MongoDB successfully established!")
+	});
+
+//close all MongoConnections if process shuts down
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Mongoose disconnected on app termination');
+    process.exit(0);
+  });
+});
 
 //generate new credetials for connecting the Amazon API
 var cred = new Credentials('EN');
@@ -25,6 +36,7 @@ var cred = new Credentials('EN');
 var opHelper = new OperationHelper(cred);
 
 //genreate Array of Amazon API requests
+
 var querryArray = [];
 querryArray = QueryBuilder();
 
@@ -33,6 +45,7 @@ function saveData(results){
 			console.log("Kein Ergebnis");
 		}
 		else {
+			//loop throgh request result for each item	
 			for(var i = 0; i < results.ItemSearchResponse.Items[0].Item.length; i++ ){
 				var newItem = new models.products({
 					id: results.ItemSearchResponse.Items[0].Item[i].ASIN[0],
@@ -43,29 +56,36 @@ function saveData(results){
 					brand: noManufacHandler (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].Manufacturer),
 					price: undefinedPrices (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].ListPrice)
 					})
+					//save new item
 					newItem.save(function(err,res){
 					if(err) console.log(err)
 						console.log(res)
 				});
 						
 			}
-		}}
+			
+		}
+
+	}
 
 //batch query all requests from the array and then the result to mongoDB; after do a timeout...
 function runQueries(){
 	var query = querryArray.pop();
+
 	if(query){
 		makeRequest(query).then(function(results){
 				console.log(query)
+
 				/*here is the entry point for the saveData function, which writes to MongoDB
 				in my case*/
+
 				saveData(results);
 			setTimeout(function(){
 				runQueries();
 			}, 1001);
 			;
 			})
-		}
+		}	
 	}
 
 //make a request and resolve the result
@@ -85,6 +105,7 @@ function noTitle(titleLink){
 	if(titleLink == undefined){return '';}
 	else{ return titleLink[0]; }
 	}
+
 //handle problem with undefined item properties
 function undefinedField (field){
 		var value = String;
@@ -93,16 +114,19 @@ function undefinedField (field){
 		 			else if (field.constructor == Object) {value = field;}
 			 		return value;
 				 	}
+
 //handle problems with undefined prices
 function undefinedPrices(price){
 		if(price == undefined) {return ''}
 		else {return price[0].Amount[0]}
 		}
+
 //handle problems for products without a picture
 function noPictureHandler(picturelink){
 		if(picturelink == undefined) {return "";}
 		else {return picturelink[0].URL[0];}s
 		}
+		
 //handle problems for products without manufacturer
 function noManufacHandler (manufLink){
 		if(manufLink == undefined){return "";}
@@ -110,3 +134,4 @@ function noManufacHandler (manufLink){
 		}
 
 module.exports = runQueries;
+module.exports.models = models;
