@@ -50,6 +50,33 @@ process.on('SIGINT', function() {
   });
 });
 
+//generate bad request for Amazon server to retrieve categories list
+var OperationHelper = require('apac').OperationHelper;
+var Credentials = require('./config/credentials');
+var cred = new Credentials('EN');
+var opHelper = new OperationHelper(cred);
+
+app.get('/BadRequest', function(req, res){
+
+opHelper.execute('ItemSearch', {
+
+ 	  'SearchIndex': 'Spielzeug',
+	  'Title': 'Ball',
+	  'KeyWords': 'Football',
+	  'ResponseGroup': 'ItemAttributes',
+	  'sort': 'relevance'
+
+		}, function(err, items){
+
+			if(err)console.log(err)
+
+			else {console.log(items);
+				res.json(items);}
+
+		})
+	})
+
+
 //parse application/json
 app.use(bodyParser.json());
 
