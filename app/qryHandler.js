@@ -12,9 +12,9 @@ var QueryBuilder = require('../app/qrybuilder');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var models = require('../app/locomyDB.js')(mongoose, Schema);
-var app = require('../server.js');
 
-//open mongoDB connection and check if it is successfully runnning
+
+// //open mongoDB connection and check if it is successfully runnning
 mongoose.connect('mongodb://localhost/locomyDB');
 mongoose.connection.on('error', console.error.bind('connection error'));
 mongoose.connection.once('open', function(){
@@ -41,9 +41,7 @@ var querryArray = [];
 querryArray = QueryBuilder();
 
 function saveData(results){
-		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0'){
-			console.log("Kein Ergebnis");
-		}
+		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') console.log("Kein Ergebnis");
 		else {
 			//loop throgh request result for each item	
 			for(var i = 0; i < results.ItemSearchResponse.Items[0].Item.length; i++ ){
@@ -56,17 +54,17 @@ function saveData(results){
 					brand: noManufacHandler (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].Manufacturer),
 					price: undefinedPrices (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].ListPrice)
 					})
-					//save new item
+					//check if item already exists
+					
+					//save new item if err because it does not exist
 					newItem.save(function(err,res){
-					if(err) console.log(err)
-						console.log(res)
-				});
-						
+					if(err) console.log(err); console.log(res)})
+										
 			}
 			
 		}
-
 	}
+
 
 //batch query all requests from the array and then the result to mongoDB; after do a timeout...
 function runQueries(){

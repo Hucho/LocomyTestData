@@ -29,18 +29,15 @@ function resToClientSide(){
 	})
 	app.get('/products', function(req,res){
 		console.log("Products are requested!");
-		models.products.find(function(err, docs){
-			console.log(docs);
-			res.json(docs);
-			mongoose.connection.close(function(){
-			console.log('MongoDB connection closed');
-			});
+		models.products.findOne(function(err, docs){
+			if(err) console.log(err);
+			else{console.log(docs);
+				res.json(docs);}
 		});
 
-	});
-}
+	});}
 
-resToClientSide();
+//resToClientSide();
 
 //close all MongoConnections if process shuts down
 process.on('SIGINT', function() {
@@ -51,6 +48,9 @@ process.on('SIGINT', function() {
 });
 
 //generate bad request for Amazon server to retrieve categories list
+
+function badRequest(){
+
 var OperationHelper = require('apac').OperationHelper;
 var Credentials = require('./config/credentials');
 var cred = new Credentials('EN');
@@ -60,10 +60,12 @@ app.get('/BadRequest', function(req, res){
 
 opHelper.execute('ItemSearch', {
 
- 	  'SearchIndex': 'Spielzeug',
-	  'Title': 'Ball',
-	  'KeyWords': 'Football',
-	  'ResponseGroup': 'ItemAttributes',
+ 	  'SearchIndex': 'All',
+	  'Title': '',
+	  'MinimumPrice': '5500',
+	  'MaximumPrice': '10500',
+	  'Keywords': 'Bycicle',
+	  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
 	  'sort': 'relevance'
 
 		}, function(err, items){
@@ -72,10 +74,13 @@ opHelper.execute('ItemSearch', {
 
 			else {console.log(items);
 				res.json(items);}
-
+				
 		})
 	})
+	
+}
 
+badRequest();
 
 //parse application/json
 app.use(bodyParser.json());

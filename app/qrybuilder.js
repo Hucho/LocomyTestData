@@ -1,5 +1,8 @@
 //app/qrybuilder.js
-var json = require('./SearchParams.json');
+//var json = require('./SearchParams.json');
+//var cats = require('./categories_EN');
+//cats();
+var json = require('../config/searchParams_EN.json');
 
 //init qry template with default values
 function qryInit () {
@@ -8,9 +11,9 @@ function qryInit () {
 
 	'SearchIndex': '',
 	'Title': '',
+	'Keywords': '',
 	'MinimumPrice': '',
 	'MaximumPrice': '',
-	'KeyWords': '',
 	'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
 	'sort': 'relevance'
 
@@ -30,9 +33,9 @@ function qryInit () {
 
 		'SearchIndex': json[i].SearchIndex,
 		'Title': json[i].Title,
+		'Keywords': json[i].Keywords,
 		'MinimumPrice': json[i].MinimumPrice,
 		'MaximumPrice': json[i].MaximumPrice,
-		'KeyWords': json[i].KeyWords,
 		'ResponseGroup': template.ResponseGroup,
 		'sort': template.sort
 
@@ -48,7 +51,7 @@ function minGen (i){
 	var Array2 = (qryTempArray(json));
 	var miniArray =[];
 	
-	for(n = Array2[i].MinimumPrice; n < Array2[i].MaximumPrice; n+=500){
+	for(n = Array2[i].MinimumPrice; n < Array2[i].MaximumPrice; n+=250){
 			
 			miniArray.push(n);
 		}
@@ -89,8 +92,8 @@ function qryBuilder (){
 					'SearchIndex': qryTempArray1[i].SearchIndex,
 					'Title': qryTempArray1[i].Title,
 					'MinimumPrice': JSON.stringify(priceArray1[i].pricesMin[z]),
-					'MaximumPrice': JSON.stringify(priceArray1[i].pricesMin[z]+500),
-					'KeyWords': qryTempArray1[i].KeyWords,
+					'MaximumPrice': JSON.stringify(priceArray1[i].pricesMin[z]+250),
+					'Keywords': qryTempArray1[i].Keywords,
 					'ResponseGroup': qryTempArray1[i].ResponseGroup,
 					'sort': qryTempArray1[i].sort
 
