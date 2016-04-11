@@ -29,7 +29,7 @@ function resToClientSide(){
 	})
 	app.get('/products', function(req,res){
 		console.log("Products are requested!");
-		models.products.findOne(function(err, docs){
+		models.products.find(function(err, docs){
 			if(err) console.log(err);
 			else{console.log(docs);
 				res.json(docs);}
@@ -60,11 +60,11 @@ app.get('/BadRequest', function(req, res){
 
 opHelper.execute('ItemSearch', {
 
- 	  'SearchIndex': 'All',
-	  'Title': '',
-	  'MinimumPrice': '5500',
-	  'MaximumPrice': '10500',
-	  'Keywords': 'Bycicle',
+ 	  'SearchIndex': 'Appliances',
+	  'Title': 'Dryer',
+	  'MinimumPrice': '57750',
+	  'MaximumPrice': '58000',
+	  'Keywords': '',
 	  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
 	  'sort': 'relevance'
 
@@ -80,7 +80,7 @@ opHelper.execute('ItemSearch', {
 	
 }
 
-badRequest();
+//badRequest();
 
 //parse application/json
 app.use(bodyParser.json());

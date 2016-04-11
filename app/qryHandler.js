@@ -40,6 +40,8 @@ var opHelper = new OperationHelper(cred);
 var querryArray = [];
 querryArray = QueryBuilder();
 
+//count received products
+
 function saveData(results){
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') console.log("Kein Ergebnis");
 		else {
@@ -54,14 +56,12 @@ function saveData(results){
 					brand: noManufacHandler (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].Manufacturer),
 					price: undefinedPrices (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].ListPrice)
 					})
-					//check if item already exists
-					
+					//the mongodb contains a unique index on id; that avoids duplicates
 					//save new item if err because it does not exist
 					newItem.save(function(err,res){
-					if(err) console.log(err); console.log(res)})
-										
+					if(err) console.log(err)
+					else console.log(res.title)})				
 			}
-			
 		}
 	}
 
@@ -72,16 +72,14 @@ function runQueries(){
 
 	if(query){
 		makeRequest(query).then(function(results){
-				console.log(query)
-
+				console.log(query.SearchIndex)
 				/*here is the entry point for the saveData function, which writes to MongoDB
 				in my case*/
-
 				saveData(results);
 			setTimeout(function(){
 				runQueries();
-			}, 1001);
-			;
+			}, 1000);
+			
 			})
 		}	
 	}
