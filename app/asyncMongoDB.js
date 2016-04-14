@@ -29,6 +29,9 @@ process.on('SIGINT', function() {
   });
 });
 
+//async
+var async = require("async");
+
 //generate new credetials for connecting the Amazon API
 var cred = new Credentials('EN');
 
@@ -45,33 +48,27 @@ querryArray = QueryBuilder();
 function saveData(results){
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') console.log("Kein Ergebnis");
 		else {
-			//loop throgh request result for each item	
-			for(var i = 0; i < results.ItemSearchResponse.Items[0].Item.length; i++ ){
-
-				//setTimeout(function(){
-
-					var newItem = new models.products({
-						id: results.ItemSearchResponse.Items[0].Item[i].ASIN[0],
-						title: noTitle (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].Title),
-						description: undefinedField (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].Feature),
-						image_link: noPictureHandler (results.ItemSearchResponse.Items[0].Item[i].MediumImage),
+			var itemArray = results.ItemSearchResponse.Items[0].Item;
+			async.each(itemArray, function(item, next){
+				var newItem = new models.products({
+						id: item.ASIN[0],
+						title: noTitle (item.ItemAttributes[0].Title),
+						description: undefinedField (item.ItemAttributes[0].Feature),
+						image_link: noPictureHandler (item.MediumImage),
 						//brand = manufacturere field from Amazon
-						brand: noManufacHandler (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].Manufacturer),
-						price: undefinedPrices (results.ItemSearchResponse.Items[0].Item[i].ItemAttributes[0].ListPrice)
+						brand: noManufacHandler (item.ItemAttributes[0].Manufacturer),
+						price: undefinedPrices (item.ItemAttributes[0].ListPrice)
 						})
-						//the mongodb contains a unique index on id; that avoids duplicates
-						//save new item if err because it does not exist
 						newItem.save(function(err,res){
-						if(err) console.log(err)
-						else console.log(res.title)})
-
-					//}, 5);			
-			}
-
-
+							if(err) console.log(err);
+							else console.log(newItem.title);
+							next();
+						});
+					}, function(){
+						console.log("All done!");
+					});	
 		}
 	}
-
 
 //batch query all requests from the array and then the result to mongoDB; after do a timeout...
 function runQueries(){
@@ -79,7 +76,7 @@ function runQueries(){
 
 	if(query){
 		makeRequest(query).then(function(results){
-				console.log("fct makeRequest: "+ query.SearchIndex)
+				console.log("function makeRequest: "+ query.SearchIndex)
 				/*here is the entry point for the saveData function, which writes to MongoDB
 				in my case*/
 				saveData(results);

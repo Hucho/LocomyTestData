@@ -6,17 +6,19 @@ var app = express();
 var bodyParser = require("body-Parser");
 var methodOverride = require("method-override");
 var util = require('util');
-var runQueries = require('./app/qryHandler');
+//var runQueries = require('./app/qryHandler');
+var runQueriesAsync = require('./app/asyncMongoDB');
 //require mongo stuff
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 /*require locomyDB model from qryHandler module,
 because it can only be once compiled*/
-var models = require('./app/qryHandler').models;
+//var models = require('./app/qryHandler').models;
 
 /*rund Queries against Amazon API and save results
 to MongoDB*/
-runQueries();
+//runQueries();
+runQueriesAsync();
 
 /*function which brings the results from Amazon in the MongoDB to the Browser
 to confirm that data has been written*/
@@ -80,7 +82,7 @@ opHelper.execute('ItemSearch', {
 	
 }
 
-//badRequest();
+badRequest();
 
 //parse application/json
 app.use(bodyParser.json());

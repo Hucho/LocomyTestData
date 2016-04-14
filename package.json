@@ -7,6 +7,7 @@
 	"body-Parser": "latest",
 	"method-override": "latest",
 	"apac": "latest",
-	"util": "latest"
+	"util": "latest",
+	"async": "latest"
 	}
 }
