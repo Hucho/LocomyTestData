@@ -6,8 +6,8 @@
 	"mongoose": "latest",
 	"body-Parser": "latest",
 	"method-override": "latest",
-	"apac": "latest",
 	"util": "latest",
-	"async": "latest"
+	"async": "latest",
+	"apac": "1.1.0"
 	}
 }

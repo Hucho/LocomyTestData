@@ -61,7 +61,7 @@ function saveData(results){
 						})
 						newItem.save(function(err,res){
 							if(err) console.log(err);
-							else console.log(newItem.title);
+							else console.log(newItem.title)
 							next();
 						});
 					}, function(){
@@ -73,18 +73,26 @@ function saveData(results){
 //batch query all requests from the array and then the result to mongoDB; after do a timeout...
 function runQueries(){
 	var query = querryArray.pop();
-
+	var hrStart = process.hrtime();
 	if(query){
 		makeRequest(query).then(function(results){
 				console.log("function makeRequest: "+ query.SearchIndex)
 				/*here is the entry point for the saveData function, which writes to MongoDB
 				in my case*/
 				saveData(results);
+			var diff = process.hrtime(hrStart);
 			setTimeout(function(){
 				runQueries();
-			}, 1000);
+			}, 1001 - ((diff[0]*1000) + (diff[1]/1000000)));
 			
-			})
+			}).catch(function(err){
+				console.log(err);
+				runQueries();
+			});
+		}
+		else {
+			console.log("All queries processed!");
+			return;
 		}	
 	}
 
@@ -93,10 +101,10 @@ function makeRequest(query){
 	return new Promise(function(resolve, reject){
 		opHelper.execute('ItemSearch', query, function(err, results){
 			if(err) return reject(err)
-			else {resolve(results)}
-			})
-	})
-	}
+			else resolve(results)
+			});
+	});
+}
 
 //error handling
 

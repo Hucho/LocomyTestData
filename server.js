@@ -60,26 +60,22 @@ var opHelper = new OperationHelper(cred);
 
 app.get('/BadRequest', function(req, res){
 
-opHelper.execute('ItemSearch', {
+	opHelper.execute('ItemSearch', {
 
- 	  'SearchIndex': 'Appliances',
-	  'Title': 'Dryer',
-	  'MinimumPrice': '57750',
-	  'MaximumPrice': '58000',
-	  'Keywords': '',
-	  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
-	  'sort': 'relevance'
+	 	  'SearchIndex': 'Fashion',
+		  'Title': 'pants',
+		  'MinimumPrice': '26000',
+		  'MaximumPrice': '26250',
+		  'Keywords': '',
+		  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
+		  'sort': 'relevance'
 
-		}, function(err, items){
-
-			if(err)console.log(err)
-
-			else {console.log(items);
-				res.json(items);}
-				
-		})
+			}).then((response) => {
+				res.json(response);
+			}).catch((err) => {
+				console.log(err);
+					})	
 	})
-	
 }
 
 badRequest();
