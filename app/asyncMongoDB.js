@@ -72,19 +72,24 @@ function saveData(results){
 
 //batch query all requests from the array and then the result to mongoDB; after do a timeout...
 function runQueries(){
+	//dequeue query array
 	var query = querryArray.pop();
+	//get time when function is started
 	var hrStart = process.hrtime();
 	if(query){
 		makeRequest(query).then(function(results){
-				console.log("function makeRequest: "+ query.SearchIndex)
-				/*here is the entry point for the saveData function, which writes to MongoDB
-				in my case*/
-				saveData(results);
+			console.log("function makeRequest: "+ query.SearchIndex +", "+ query.Title)
+			/*here is the entry point for the saveData function, which writes to MongoDB
+			in my case*/
+			saveData(results);
+			//get time between request initiation and saving in MonogDB
 			var diff = process.hrtime(hrStart);
 			setTimeout(function(){
 				runQueries();
+			/*set query delay according to time elapsed	since last
+			query minus query delay expected by Amazon server*/	
 			}, 1001 - ((diff[0]*1000) + (diff[1]/1000000)));
-			
+			/*if makeRegquest promise is rejected, catch it, print it and continue sending the next query*/
 			}).catch(function(err){
 				console.log(err);
 				runQueries();
