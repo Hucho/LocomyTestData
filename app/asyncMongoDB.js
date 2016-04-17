@@ -32,6 +32,12 @@ process.on('SIGINT', function() {
 //async
 var async = require("async");
 
+//require randomCoordinates module
+var usa_geojson = require('../config/geo/GeoJson/usa_wgs1984.json');
+var randCoords = require('../app/randomCoordinates');
+var coords = new randCoords(usa_geojson);
+console.log(coords.getCoords());
+
 //generate new credetials for connecting the Amazon API
 var cred = new Credentials('EN');
 
@@ -46,10 +52,13 @@ querryArray = QueryBuilder();
 //count received products
 
 function saveData(results){
-		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') console.log("Kein Ergebnis");
+		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
+			console.log("Kein Ergebnis");
+			return;}
 		else {
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
 			async.each(itemArray, function(item, next){
+				var tempCoords = coords.getCoords();
 				var newItem = new models.products({
 						id: item.ASIN[0],
 						title: noTitle (item.ItemAttributes[0].Title),
@@ -57,17 +66,19 @@ function saveData(results){
 						image_link: noPictureHandler (item.MediumImage),
 						//brand = manufacturere field from Amazon
 						brand: noManufacHandler (item.ItemAttributes[0].Manufacturer),
-						price: undefinedPrices (item.ItemAttributes[0].ListPrice)
+						price: undefinedPrices (item.ItemAttributes[0].ListPrice),
+						x: tempCoords[0],
+						y: tempCoords[1]
 						})
 						newItem.save(function(err,res){
 							if(err) console.log(err);
-							else console.log(newItem.title)
-							next();
+							else {console.log(newItem.title);
+							next();}
 						});
 					}, function(){
 						console.log("All done!");
 					});	
-		}
+		return;}
 	}
 
 //batch query all requests from the array and then the result to mongoDB; after do a timeout...
@@ -77,8 +88,8 @@ function runQueries(){
 	//get time when function is started
 	var hrStart = process.hrtime();
 	if(query){
-		makeRequest(query).then(function(results){
-			console.log("function makeRequest: "+ query.SearchIndex +", "+ query.Title)
+		makeRequest(query).then(function(results, err){
+			console.log("function makeRequest: "+ query.SearchIndex +", "+ query.Title);
 			/*here is the entry point for the saveData function, which writes to MongoDB
 			in my case*/
 			saveData(results);
@@ -91,8 +102,12 @@ function runQueries(){
 			}, 1001 - ((diff[0]*1000) + (diff[1]/1000000)));
 			/*if makeRegquest promise is rejected, catch it, print it and continue sending the next query*/
 			}).catch(function(err){
-				console.log(err);
-				runQueries();
+				if(err.statusCode == 503){
+					console.log("Error 503!");
+					runQueries();}
+				else if (err.statusCode == undefined) {
+					console.log(err);
+					runQueries();}
 			});
 		}
 		else {

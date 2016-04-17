@@ -17,7 +17,6 @@ because it can only be once compiled*/
 
 /*rund Queries against Amazon API and save results
 to MongoDB*/
-//runQueries();
 runQueriesAsync();
 
 /*function which brings the results from Amazon in the MongoDB to the Browser
@@ -62,11 +61,11 @@ app.get('/BadRequest', function(req, res){
 
 	opHelper.execute('ItemSearch', {
 
-	 	  'SearchIndex': 'Fashion',
-		  'Title': 'pants',
+	 	  'SearchIndex': 'MusicTracks',
+		  'Title': '',
 		  'MinimumPrice': '26000',
 		  'MaximumPrice': '26250',
-		  'Keywords': '',
+		  'Keywords': 'Rock',
 		  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
 		  'sort': 'relevance'
 

@@ -51,7 +51,10 @@ var product = new Schema ({
 	size_type: String,
 	size_system: String,
 	online_only: Boolean,
-	locomy_point: Number}, {collection: 'product'});
+	locomy_point: Number,
+	//x and y added; original db scheme altered
+	x: Number,
+	y: Number}, {collection: 'product'});
 
 var product_rating = new Schema ({
 
