@@ -23,7 +23,7 @@ var querryArray = QueryBuilder();
 //save data from Amazon request to MongoDB
 function saveData(results){
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
-			console.log("Kein Ergebnis");
+			console.log("No result from makeRequest!");
 			return;}
 		else {
 			var itemArray = results.ItemSearchResponse.Items[0].Item;

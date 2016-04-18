@@ -79,7 +79,6 @@ function qryBuilder (){
 //function to multiply the queries based on the title array
 function multiReqByTitle(){
 	var sourceArray = qryBuilder();
-	console.log(sourceArray.length);
 	var superArray = [];
 	sourceArray.map(function(query){
 		query.Title.forEach(function(element){
@@ -95,7 +94,7 @@ function multiReqByTitle(){
 				});
 		});
 	});
-	console.log(superArray.length);
+	console.log(superArray.length + " queries have been built!");
 	return superArray;
 }
 //expose module

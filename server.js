@@ -5,11 +5,14 @@ var app = express();
 var bodyParser = require("body-Parser");
 var methodOverride = require("method-override");
 var util = require('util');
+var logger = require('./app/logger');
+logger.log;
 /*require locomyDB model from qryHandler module,
 because it can only be once compiled*/
 var models = require('./app/qryHandler').models;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
 var runQueriesAsync = require('./app/qryHandler');
+console.log("Queries are being processed...");
 runQueriesAsync();
 /*function which brings the results from Amazon in the MongoDB to the Browser
 to confirm that data has been written*/

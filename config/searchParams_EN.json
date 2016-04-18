@@ -425,7 +425,7 @@
   {
     "SearchIndex": "Tools",
     "Title": [
-      "Tools"
+      "Tools", "Driller", "Saw", "Screw", "Driver"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -434,7 +434,7 @@
   {
     "SearchIndex": "Baby",
     "Title": [
-      "Baby"
+      "Baby", "Boy", "Girl"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -479,7 +479,7 @@
   {
     "SearchIndex": "LawnAndGarden",
     "Title": [
-      "LawnAndGarden"
+      "Lawn", "Garden","Tree"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -487,14 +487,14 @@
   },
   {
     "SearchIndex": "WirelessAccessories",
-    "Title": ["WirelessAccessories"],
+    "Title": ["Wireless", "Bluetooth", "USB"],
     "Keywords": "",
     "MinimumPrice": 500,
     "MaximumPrice": 10000
   },
   {
     "SearchIndex": "HealthPersonalCare",
-    "Title": ["HealthPersonalCare", "Baby", "Skin", "Hair", "Teeth", "Eyes"],
+    "Title": ["Baby", "Skin", "Hair", "Teeth", "Eyes"],
     "Keywords": "",
     "MinimumPrice": 1000,
     "MaximumPrice": 25000
