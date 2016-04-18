@@ -1,8 +1,6 @@
 //this module generates random coordinates for the MongoDB
 var Terraformer = require('terraformer');
-var usa_geojson = require('../config/geo/GeoJson/usa_wgs1984.json');
-
-//construtctor
+//constructor
 function RandomCoords(geojson){
 	this.geojson = geojson;
 }
