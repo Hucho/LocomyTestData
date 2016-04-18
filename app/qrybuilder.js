@@ -1,7 +1,4 @@
 //app/qrybuilder.js
-//var categoryBuilder = require('./categories_EN');
-//start function to build json template file
-//categoryBuilder();
 //require json template for queryBuilder
 var json = require('../config/searchParams_EN.json');
 //init qry template with default values

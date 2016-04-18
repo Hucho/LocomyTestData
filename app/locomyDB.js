@@ -1,8 +1,9 @@
 // app/locomyDB.js
-module.exports = function(mongoose, Schema){ 
+module.exports = function(mongoose, Schema){
+//connect to database
+var db = mongoose.createConnection('mongodb://localhost/locomyDB');
 //define locomyDB model
 var product = new Schema ({
-
 	// id changed from Number to StringS
 	id: String,
 	//category_id changed to String
@@ -10,21 +11,16 @@ var product = new Schema ({
 	title: String,
 	description: String,
 	creation_date: {type: Date, default: Date.now},
-
 	//timestamp is not modeled correctly
 	creation_time: {type: Date, default: Date.now},
 	modification_date: {type: Date, default: Date.now},
-
 	//timestamp is not modeled correctly
 	modification_time: {type: Date, default: Date.now},
-
 	is_visible: Boolean,
 	in_stock: Number,
 	identifier_exists: Boolean,
-
 	//"-" replaced with "_"
 	is_bundle: Boolean,
-
 	link: String,
 	mobile_link: String,
 	image_link: String,
@@ -57,14 +53,12 @@ var product = new Schema ({
 	y: Number}, {collection: 'product'});
 
 var product_rating = new Schema ({
-
 	id: Number,
 	product_id: Number,
 	rate: Number,
 	description: String}, {collection:'product_rating'});
 
 var product_shipping = new Schema ({
-
 	id: Number,
 	product_id: Number,
 	shipping_price: Number,
@@ -78,19 +72,16 @@ var product_shipping = new Schema ({
 	shipping_height: Number,
 	shipping_height_unit: String,
 	shipping_label: [{shipping_area_id: Number}],
-
 	//shipping_areas definition may be changed
 	shipping_areas: [{area: String, zip_code: Number}] }, {collection: 'product_shipping'});
 
 var product_category = new Schema ({
-
 	id: Number,
 	category_id: Number,
 	name: String,
 	desciption: String }, {collection: 'product_category'});
 
 var product_custom_attribute = new Schema ({
-
 	id: Number,
 	name: String,
 	type: String,
@@ -99,24 +90,20 @@ var product_custom_attribute = new Schema ({
 	product_id: Number }, {collection: 'product_custom_attributes'});
 
 var product_activity_log = new Schema ({
-
 	id: Number,
 	product_id: Number,
 	key: String,
 	value: String,
 	date: Date,
-
 	//timestamp is not modeled correctly
 	time: {type: Date, default: Date.now} }, {collection: 'product_activity_log'});
 
 var product_shop = new Schema ({
-
 	id: Number,
 	product_id: Number,
 	shop_id: Number }, {collection: 'product_shop'});
 
 var shop = new Schema ({
-
 	id: Number,
 	name: String,
 	phone: String,
@@ -129,27 +116,23 @@ var shop = new Schema ({
 	geom: [{x: Number, y: Number}] }, {collection: 'shop'});
 
 var shop_rating = new Schema ({
-
 	id: Number,
 	shop_id: Number,
 	rate: Number,
 	description: String }, {collection: 'shop_rating'});
 
 var product_review = new Schema ({
-
 	id: Number,
 	user_id: Number,
 	product_id: Number,
 	comment: String }, {collection: 'product_review'});
 
 var product_user = new Schema ({
-
 	id: Number,
 	product_id: Number,
 	user_id: Number }, {collection: 'product_user'});
 
 var user = new Schema ({
-
 	id: Number,
 	username: String,
 	password: String,
@@ -164,7 +147,6 @@ var user = new Schema ({
 	user_location: [{x: Number, y: Number}] }, {collection: 'user'});
 
 var messenger_activity_log = new Schema ({
-
 	id: Number,
 	sender_user_id: Number,
 	sender_jid: String,
@@ -172,13 +154,11 @@ var messenger_activity_log = new Schema ({
 	receiver_jid: String,
 	sid: String,
 	rid: String,
-
 	//timestamp may not be modeled correctly
 	creation_time: {type: Date, default: Date.now},
 	termination_time: {type: Date, default: Date.now} }, {collection: 'messenger_activity_log'});
 
 var user_actvity_log = new Schema ({
-
 	id: Number,
 	sender_user_id: Number,
 	sender_jid: String,
@@ -186,74 +166,61 @@ var user_actvity_log = new Schema ({
 	receiver_jid: String,
 	sid: String,
 	rid: String,
-	
 	//timestamp may not be modeled correctly
 	creation_time: {type: Date, default: Date.now},
 	termination_time: {type: Date, default: Date.now} }, {collection: 'user_actvity_log'});
 
 var user_lp = new Schema ({
-
 	id: Number,
 	user_id: Number,
 	balance: Number,
 	expiration_date: Date,
 	shop_id: Number,
 	product_id: Number
-
 	}, {collection: 'user_lp'});
 
 var user_config = new Schema ({
-
 	id: Number,
 	user_id: Number,
 	key: String,
 	value: String,
 	description: String
-
 	}, {collection: 'user_config'});
 
 var spatial_ref_sy = new Schema ({
-
 	srid: Number,
 	auth_name: String,
 	auth_srid: Number,
 	srtext: String,
 	proj4text: String
-
 	}, {collection: 'spatial_ref_sys'});
 
 var system_setting = new Schema ({
-
 	id: Number,
 	key: String,
 	value: String,
 	description: String
-
 	}, {collection: 'system_setting'});
 
 var models = {
-
-	products: mongoose.model('products', product),
-	product_ratings: mongoose.model('product_ratings', product_rating),
-	product_shippings: mongoose.model('product_shippings', product_shipping),
-	product_categorys: mongoose.model('product_categorys', product_category),
-	product_custom_attributes: mongoose.model('product_custom_attributes', product_custom_attribute),
-	product_activity_logs: mongoose.model('product_activity_logs', product_activity_log),
-	product_shops: mongoose.model('product_shops', product_shop),
-	shops: mongoose.model('shops', shop),
-	shop_ratings: mongoose.model('shop_ratings', shop_rating),
-	product_reviews: mongoose.model('product_reviews', product_review),
-	product_users: mongoose.model('product_users', product_user),
-	users: mongoose.model('users', user),
-	messenger_activity_logs: mongoose.model('messenger_activity_logs', messenger_activity_log),
-	user_actvity_logs: mongoose.model('user_actvity_logs', user_actvity_log),
-	user_lps: mongoose.model('user_lps', user_lp),
-	user_configs: mongoose.model('user_configs', user_config),
-	spatial_ref_sys: mongoose.model('spatial_ref_sys', spatial_ref_sy),
-	system_settings: mongoose.model('system_settings', system_setting)
-
+	products: db.model('products', product),
+	product_ratings: db.model('product_ratings', product_rating),
+	product_shippings: db.model('product_shippings', product_shipping),
+	product_categorys: db.model('product_categorys', product_category),
+	product_custom_attributes: db.model('product_custom_attributes', product_custom_attribute),
+	product_activity_logs: db.model('product_activity_logs', product_activity_log),
+	product_shops: db.model('product_shops', product_shop),
+	shops: db.model('shops', shop),
+	shop_ratings: db.model('shop_ratings', shop_rating),
+	product_reviews: db.model('product_reviews', product_review),
+	product_users: db.model('product_users', product_user),
+	users: db.model('users', user),
+	messenger_activity_logs: db.model('messenger_activity_logs', messenger_activity_log),
+	user_actvity_logs: db.model('user_actvity_logs', user_actvity_log),
+	user_lps: db.model('user_lps', user_lp),
+	user_configs: db.model('user_configs', user_config),
+	spatial_ref_sys: db.model('spatial_ref_sys', spatial_ref_sy),
+	system_settings: db.model('system_settings', system_setting)
 	};
-
 return models;
-
 };

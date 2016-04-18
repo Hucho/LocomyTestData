@@ -1,56 +1,26 @@
 //app/qryHandler.js
-//QueryHandler: This code takes an array from the qryBuilder and tries to handle
-//the request to the Amazon API
-//require array from qrybuilder function
-var OperationHelper = require('apac').OperationHelper;
+//require necessary modules=============================================================
+//generate new credetials for connecting the Amazon API
 var Credentials = require('../config/credentials');
-
-//requrie function which builds the Querry Array
-var QueryBuilder = require('../app/qrybuilder');
-
+var cred = new Credentials('EN');
+//generate new OperationsHelper for Amazon Product API
+var OperationHelper = require('apac').OperationHelper;
+var opHelper = new OperationHelper(cred);
+//async
+var async = require("async");
 //require mongoDB stuff
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var models = require('../app/locomyDB.js')(mongoose, Schema);
-
-
-// //open mongoDB connection and check if it is successfully runnning
-mongoose.connect('mongodb://localhost/locomyDB');
-mongoose.connection.on('error', console.error.bind('connection error'));
-mongoose.connection.once('open', function(){
-console.log("Connection to MongoDB successfully established!")
-	});
-
-//close all MongoConnections if process shuts down
-process.on('SIGINT', function() {
-  mongoose.connection.close(function () {
-    console.log('Mongoose disconnected on app termination');
-    process.exit(0);
-  });
-});
-
-//async
-var async = require("async");
-
-//require randomCoordinates module
-var usa_geojson = require('../config/geo/GeoJson/usa_wgs1984.json');
+//require randomCoordinates module and input GeoJson file
 var randCoords = require('../app/randomCoordinates');
-var coords = new randCoords(usa_geojson);
-console.log(coords.getCoords());
-
-//generate new credetials for connecting the Amazon API
-var cred = new Credentials('EN');
-
-//generate new OperationsHelper for Amazon Product API
-var opHelper = new OperationHelper(cred);
-
+var coords = new randCoords(require('../config/geo/GeoJson/usa_wgs1984.json'));
+//requrie function which builds the Querry Array
+var QueryBuilder = require('../app/qrybuilder');
 //genreate Array of Amazon API requests
-
-var querryArray = [];
-querryArray = QueryBuilder();
-
-//count received products
-
+var querryArray = QueryBuilder();
+//fire requests to Amazon Api and store the data received===================================
+//save data from Amazon request to MongoDB
 function saveData(results){
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
 			console.log("Kein Ergebnis");
@@ -76,12 +46,12 @@ function saveData(results){
 							next();}
 						});
 					}, function(){
-						console.log("All done!");
+						console.log("All items saved to MongoDB!");
 					});	
 		return;}
 	}
-
-//batch query all requests from the array and then the result to mongoDB; after do a timeout...
+/*batch query all requests from the array and then wirte
+the result to mongoDB; after do a timeout...*/
 function runQueries(){
 	//dequeue query array
 	var query = querryArray.pop();
@@ -100,7 +70,9 @@ function runQueries(){
 			/*set query delay according to time elapsed	since last
 			query minus query delay expected by Amazon server*/	
 			}, 1001 - ((diff[0]*1000) + (diff[1]/1000000)));
-			/*if makeRegquest promise is rejected, catch it, print it and continue sending the next query*/
+			/*if makeRegquest promise is rejected, check for 503 error,
+			check for undefined error, print errors and in any case 
+			restart runQueries function to make the next request*/
 			}).catch(function(err){
 				if(err.statusCode == 503){
 					console.log("Error 503!");
@@ -115,7 +87,6 @@ function runQueries(){
 			return;
 		}	
 	}
-
 //make a request and resolve the result
 function makeRequest(query){
 	return new Promise(function(resolve, reject){
@@ -125,15 +96,12 @@ function makeRequest(query){
 			});
 	});
 }
-
-//error handling
-
+//error handling=================================================================
 //handle problems with undefined title
 function noTitle(titleLink){
 	if(titleLink == undefined){return '';}
 	else{ return titleLink[0]; }
 	}
-
 //handle problem with undefined item properties
 function undefinedField (field){
 		var value = String;
@@ -142,24 +110,22 @@ function undefinedField (field){
 		 			else if (field.constructor == Object) {value = field;}
 			 		return value;
 				 	}
-
 //handle problems with undefined prices
 function undefinedPrices(price){
 		if(price == undefined) {return ''}
 		else {return price[0].Amount[0]}
 		}
-
 //handle problems for products without a picture
 function noPictureHandler(picturelink){
 		if(picturelink == undefined) {return "";}
 		else {return picturelink[0].URL[0];}s
 		}
-		
 //handle problems for products without manufacturer
 function noManufacHandler (manufLink){
 		if(manufLink == undefined){return "";}
 		else{return manufLink[0];}
 		}
-
+//export query function
 module.exports = runQueries;
+//export mongoose model
 module.exports.models = models;
