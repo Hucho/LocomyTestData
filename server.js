@@ -7,9 +7,9 @@ var methodOverride = require("method-override");
 var util = require('util');
 /*require locomyDB model from qryHandler module,
 because it can only be once compiled*/
-var models = require('./app/asyncMongoDB').models;
+var models = require('./app/qryHandler').models;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
-var runQueriesAsync = require('./app/asyncMongoDB');
+var runQueriesAsync = require('./app/qryHandler');
 runQueriesAsync();
 /*function which brings the results from Amazon in the MongoDB to the Browser
 to confirm that data has been written*/
