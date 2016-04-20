@@ -1,5 +1,6 @@
 //app/qryHandler.js
 //require necessary modules=============================================================
+var logger = require('./logger');
 //generate new credetials for connecting the Amazon API
 var Credentials = require('../config/credentials');
 var cred = new Credentials('EN');
@@ -23,7 +24,7 @@ var querryArray = QueryBuilder();
 //save data from Amazon request to MongoDB
 function saveData(results){
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
-			console.log("No result from makeRequest!");
+			logger.log('warn', 'No result from makeRequest!');
 			return;}
 		else {
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
@@ -41,12 +42,12 @@ function saveData(results){
 						y: tempCoords[1]
 						})
 						newItem.save(function(err,res){
-							if(err) console.log(err);
-							else {console.log(newItem.title);
+							if(err) logger.log('debug',err);
+							else {logger.log('debug', newItem.title);
 							next();}
 						});
 					}, function(){
-						console.log("All items saved to MongoDB!");
+						logger.log('debug', "All items saved to MongoDB!");
 					});	
 		return;}
 	}
@@ -59,7 +60,7 @@ function runQueries(){
 	var hrStart = process.hrtime();
 	if(query){
 		makeRequest(query).then(function(results, err){
-			console.log("function makeRequest: "+ query.SearchIndex +", "+ query.Title);
+			logger.log('info',"function makeRequest: "+ query.SearchIndex +", "+ query.Title);
 			/*here is the entry point for the saveData function, which writes to MongoDB
 			in my case*/
 			saveData(results);
@@ -75,10 +76,10 @@ function runQueries(){
 			restart runQueries function to make the next request*/
 			}).catch(function(err){
 				if(err.statusCode == 503){
-					console.log("Error 503!");
+					logger.log('error', "Error 503!");
 					runQueries();}
 				else if (err.statusCode == undefined) {
-					console.log(err);
+					logger.log('error', err);
 					runQueries();}
 			});
 		}

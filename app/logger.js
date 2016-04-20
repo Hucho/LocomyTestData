@@ -1,17 +1,18 @@
 //logging module
 var winston = require('winston');
 
-var logger = new(winston.Logger)({
-    transports: [
-        new(winston.transports.Console)(),
-        new(winston.transports.File)({
-        	level: "debug",
-           	filename: 'locomyTestDataApp.log',
-           	handleExceptions: true,
-           	json: true,
-           	colorize: false
-           	})
-    ]
+var logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)({
+      level: 'debug',
+      colorize: true}),
+    new (winston.transports.File)({
+      filename: "locomyTestDataApp.log",
+      level: "info",
+      colorize: true
+    })
+
+  ]
 });
 
 module.exports = logger;

@@ -2,6 +2,10 @@
 module.exports = function(mongoose, Schema){
 //connect to database
 var db = mongoose.createConnection('mongodb://localhost/locomyDB');
+db.on('error', console.error);
+db.once('open', function(){
+	console.log("Connection to MongoDB established!");
+});
 //define locomyDB model
 var product = new Schema ({
 	// id changed from Number to StringS
