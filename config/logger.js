@@ -9,7 +9,10 @@ var logger = new (winston.Logger)({
     new (winston.transports.File)({
       filename: "locomyTestDataApp.log",
       level: "info",
-      colorize: true
+      colorize: true,
+      handleExceptions: true,
+      humanReadableUnhandledException: true,
+      exitOnError: false
     })
 
   ]

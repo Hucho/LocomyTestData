@@ -5,7 +5,7 @@ var app = express();
 var bodyParser = require("body-Parser");
 var methodOverride = require("method-override");
 var util = require('util');
-var logger = require('./app/logger');
+var logger = require('./config/logger');
 /*require locomyDB model from qryHandler module,
 because it can only be once compiled*/
 var mongoSetup = require('./app/qryHandler').mongoSetup;

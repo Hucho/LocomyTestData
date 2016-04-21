@@ -1,6 +1,6 @@
 //app/qryHandler.js
 //require necessary modules=============================================================
-var logger = require('./logger');
+var logger = require('../config/logger');
 //generate new credetials for connecting the Amazon API
 var Credentials = require('../config/credentials');
 var cred = new Credentials('EN');
@@ -47,8 +47,7 @@ function saveData(results){
 					}, function(){
 						logger.log('debug', "All items saved to MongoDB!");
 					});	
-		return;}
-	}
+		return;}}
 /*batch query all requests from the array and then wirte
 the result to mongoDB; after do a timeout...*/
 function runQueries(){
@@ -93,8 +92,7 @@ function makeRequest(query){
 			if(err) return reject(err)
 			else resolve(results)
 			});
-	});
-}
+	});}
 //error handling=================================================================
 //handle problems with undefined title
 function noTitle(titleLink){
