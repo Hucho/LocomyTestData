@@ -8,7 +8,7 @@ var util = require('util');
 var logger = require('./app/logger');
 /*require locomyDB model from qryHandler module,
 because it can only be once compiled*/
-var models = require('./app/qryHandler').models;
+var mongoSetup = require('./app/qryHandler').mongoSetup;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
 var runQueriesAsync = require('./app/qryHandler');
 logger.log('debug','Queries are being processed...');
@@ -19,7 +19,7 @@ has been written*/
 function resToClientSide(){
 	app.get('/products', function(req,res){
 		console.log("Products are requested!");
-		models.products.find(function(err, docs){
+		mongoSetup.products.find(function(err, docs){
 			if(err) console.log(err);
 			else{console.log(docs);
 				res.json(docs);}

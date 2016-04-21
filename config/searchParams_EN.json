@@ -29,7 +29,7 @@
   {
     "SearchIndex": "ArtsAndCrafts",
     "Title": [
-      "ArtsAndCrafts"
+      "Painting", "Art", "Craft", "Handmade"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -56,16 +56,17 @@
   {
     "SearchIndex": "Jewelry",
     "Title": [
-      "Jewelry"
+      "Necklace", "Ring", "Bracelet", "Marriage", "Diamond", "Emerald", "Opal", "Silver", "Gold",
+      "Platin", "Titanium"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 1000,
+    "MaximumPrice": 500000
   },
   {
     "SearchIndex": "MobileApps",
     "Title": [
-      "MobileApps"
+      "Mobile","App"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -92,11 +93,11 @@
   {
     "SearchIndex": "KindleStore",
     "Title": [
-      "KindleStore"
+      "Love", "Hate", "Murder", "Drama", "Crime", "Comedy"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 5000
   },
   {
     "SearchIndex": "Automotive",
@@ -119,16 +120,16 @@
   {
     "SearchIndex": "MusicalInstruments",
     "Title": [
-      "MusicalInstruments"
+      "Music", "Guitar", "Piano", "Flute", "Cello", "Banjo", "Violin", "Drums"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 1000,
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "DigitalMusic",
     "Title": [
-      "DigitalMusic"
+      "Music", "Digital", "Rock", "Classical", "Jazz", "Metal"
     ],
     "Keywords": "Electro",
     "MinimumPrice": 500,
@@ -137,34 +138,34 @@
   {
     "SearchIndex": "GiftCards",
     "Title": [
-      "GiftCards"
+      "Gift","Cards","Birthday"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "FashionBaby",
     "Title": [
-      "FashionBaby"
+      "Fashion","Baby", "Girl", "Boy", "Winter", "Summer", "Spring", "Sport", "Sleeping"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 15000
   },
   {
     "SearchIndex": "FashionGirls",
     "Title": [
-      "FashionGirls"
+      "Fashion", "Girls", "Pant", "Skirt", "T-Shirt", "Top", "Leggins", "Season", "Sport", "Trouser", "Sweatshirt", "Pullover"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 1000,
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "GourmetFood",
     "Title": [
-      "GourmetFood"
+      "Gourmet", "Food", "Honey"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -173,11 +174,12 @@
   {
     "SearchIndex": "HomeGarden",
     "Title": [
-      "HomeGarden"
+      "Home", "Garden", "Lawn", "Cutter", "Saw", "Bucket", "Tool", "Tools", "Plant", "Flower", "Sweatshirt", "Pullover",
+      "Farming", "Herb", "Fertilizer"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "MusicTracks",
@@ -191,11 +193,11 @@
   {
     "SearchIndex": "FashionWomen",
     "Title": [
-      "FashionWomen"
+      "Fashion", "Woman", "Pant", "Skirt", "T-Shirt", "Top", "Leggins", "Season", "Bikini", "Sport", "Trouser", "Sweatshirt", "Pullover"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "VideoGames",
@@ -209,11 +211,11 @@
   {
     "SearchIndex": "FashionMen",
     "Title": [
-      "FashionMen"
+      "Fashion", "Men", "Pant", "T-Shirt","Season", "Sport", "Trouser", "Sweatshirt", "Pullover", "Suit", "Black", "White","Red"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 2000,
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "Kitchen",
@@ -254,7 +256,7 @@
   {
     "SearchIndex": "Grocery",
     "Title": [
-      "Grocery"
+      "Juice", "Blackberry", "Flavor", "Ounce", "Pack"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -281,7 +283,7 @@
   {
     "SearchIndex": "PetSupplies",
     "Title": [
-      "PetSupplies"
+      "Pet","Hair", "Dog", "Cat", "Pig", "Bird", "Fish", "Snake", "Turtle", "Bunny"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -290,11 +292,11 @@
   {
     "SearchIndex": "OfficeProducts",
     "Title": [
-      "OfficeProducts"
+      "Office", "Desk", "Microsoft", "Chair", "Lamp", "Scissors", "Organizer", "Pillow", "USB", "Supply"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "Magazines",
@@ -326,11 +328,11 @@
   {
     "SearchIndex": "OutdoorLiving",
     "Title": [
-      "OutdoorLiving"
+      "Outdoor", "Living", "Lamp", "LED", "Tent", "Shoes", "Pack", "Supply", "Rope"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "Toys",
@@ -344,20 +346,20 @@
   {
     "SearchIndex": "SportingGoods",
     "Title": [
-      "SportingGoods"
+      "Sport", "Tennis", "Golf", "Football", "Swimming", "Diving", "Surfing", "Running", "Climbing", "Hiking", "Table tennis", "Cycling"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "PCHardware",
     "Title": [
-      "PCHardware"
+      "PC", "Hardware", "USB", "Drive", "Hard Drive", "RAM", "Memory", "SD", "Card", "Printer", "Copy", "Scan", "Cooler"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "Movies",
@@ -407,7 +409,7 @@
   {
     "SearchIndex": "MP3Downloads",
     "Title": [
-      "MP3Downloads"
+      "MP3", "Beatles", "Queen", "Rolling", "Jackson", "Adele"
     ],
     "Keywords": "",
     "MinimumPrice": 500,

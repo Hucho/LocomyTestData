@@ -9,10 +9,8 @@ var OperationHelper = require('apac').OperationHelper;
 var opHelper = new OperationHelper(cred);
 //async
 var async = require("async");
-//require mongoDB stuff
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var models = require('../app/locomyDB.js')(mongoose, Schema);
+//require mongo models with mongo connection
+var mongoSetup = require('../app/locomyDB.js');
 //require randomCoordinates module and input GeoJson file
 var randCoords = require('../app/randomCoordinates');
 var coords = new randCoords(require('../config/geo/GeoJson/usa_wgs1984.json'));
@@ -30,7 +28,7 @@ function saveData(results){
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
 			async.each(itemArray, function(item, next){
 				var tempCoords = coords.getCoords();
-				var newItem = new models.products({
+				var newItem = new mongoSetup.products({
 						id: item.ASIN[0],
 						title: noTitle (item.ItemAttributes[0].Title),
 						description: undefinedField (item.ItemAttributes[0].Feature),
@@ -67,7 +65,7 @@ function runQueries(){
 			//get time between request initiation and saving in MonogDB
 			var diff = process.hrtime(hrStart);
 			setTimeout(function(){
-				runQueries();
+			runQueries();
 			/*set query delay according to time elapsed	since last
 			query minus query delay expected by Amazon server*/	
 			}, 1001 - ((diff[0]*1000) + (diff[1]/1000000)));
@@ -129,4 +127,4 @@ function noManufacHandler (manufLink){
 //export query function
 module.exports = runQueries;
 //export mongoose model
-module.exports.models = models;
+module.exports.mongoSetup = mongoSetup;

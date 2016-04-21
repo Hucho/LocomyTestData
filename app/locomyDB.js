@@ -1,5 +1,7 @@
 // app/locomyDB.js
-module.exports = function(mongoose, Schema){
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+function mongoSetup (mongoose, Schema){
 //connect to database
 var db = mongoose.createConnection('mongodb://localhost/locomyDB');
 db.on('error', console.error);
@@ -228,3 +230,4 @@ var models = {
 	};
 return models;
 };
+module.exports = mongoSetup(mongoose, Schema);
