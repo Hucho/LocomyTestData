@@ -53,7 +53,7 @@
 			objectArray.push(templateObj);
 			}
 		}
-	fs.writeFileSync('./config/searchParams_EN.json', JSON.stringify(objectArray, null, 2),'utf-8');
+	//fs.writeFileSync('./config/searchParams_EN.json', JSON.stringify(objectArray, null, 2),'utf-8');
 }
 //expose module
  module.exports = returnCats;

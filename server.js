@@ -6,13 +6,15 @@ var bodyParser = require("body-Parser");
 var methodOverride = require("method-override");
 var util = require('util');
 var logger = require('./config/logger');
+//TEST
+var mongoQuery = require('./config/queryMongo');
 /*require locomyDB model from qryHandler module,
 because it can only be once compiled*/
 var mongoSetup = require('./app/qryHandler').mongoSetup;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
 var runQueriesAsync = require('./app/qryHandler');
 logger.log('debug','Queries are being processed...');
-runQueriesAsync();
+//runQueriesAsync();
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data
 has been written*/

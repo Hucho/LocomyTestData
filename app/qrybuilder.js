@@ -1,8 +1,10 @@
 //app/qrybuilder.js
-//require json template for queryBuilder
-var json = require('../config/searchParams_EN.json');
+//constructor
+function queryArray(json){
+	this.json = json;
+}
 //init qry template with default values
-function qryInit () {
+queryArray.prototype.qryInit = function() {
 	var qryTemplate = {
 	'SearchIndex': '',
 	'Title': '',
@@ -15,16 +17,16 @@ function qryInit () {
 	return qryTemplate;
 }
 //generate array of request templates
- function qryTempArray  (json){
-	var template = qryInit();
+ queryArray.prototype.qryTempArray = function (){
+	var template = this.qryInit();
 	var qryTempArray1 = [];
-	for(var i = 0; i < json.length; i++){
+	for(var i = 0; i < this.json.length; i++){
 		qryTempArray1.push({
-		'SearchIndex': json[i].SearchIndex,
-		'Title': json[i].Title,
-		'Keywords': json[i].Keywords,
-		'MinimumPrice': json[i].MinimumPrice,
-		'MaximumPrice': json[i].MaximumPrice,
+		'SearchIndex': this.json[i].SearchIndex,
+		'Title': this.json[i].Title,
+		'Keywords': this.json[i].Keywords,
+		'MinimumPrice': this.json[i].MinimumPrice,
+		'MaximumPrice': this.json[i].MaximumPrice,
 		'ResponseGroup': template.ResponseGroup,
 		'sort': template.sort
 		});
@@ -32,8 +34,8 @@ function qryInit () {
 	return qryTempArray1;
 }
 //helper function for priceArray1
-function minGen (i){
-	var Array2 = (qryTempArray(json));
+ queryArray.prototype.minGen = function(i){
+	var Array2 = (this.qryTempArray(this.json));
 	var miniArray =[];
 	//set number in Euro/Dollar cents to set the increment between two queries
 	for(n = Array2[i].MinimumPrice; n < Array2[i].MaximumPrice; n+=250){
@@ -42,23 +44,23 @@ function minGen (i){
 	return miniArray;
 	}
 //function vor calculating the price range as query multiplyer
-function priceArray (){
-	var Array1 = (qryTempArray(json));
+ queryArray.prototype.priceArray = function(){
+	var Array1 = (this.qryTempArray(this.json));
 	var minimumArray = [];
 	for(var i = 0; i < Array1.length; i++){
 			minimumArray.push({
 				'index': i,
-				'pricesMin': minGen(i)
+				'pricesMin': this.minGen(i)
 			});	
 	}
 	return minimumArray;
 }
-//function for finally building all the queries; this function is exposed
-function qryBuilder (){
+//function for finally building all the queries
+ queryArray.prototype.qryBuilder = function(){
 	var qryTempArray1 = [];
-	qryTempArray1 = qryTempArray(json);
+	qryTempArray1 = this.qryTempArray(this.json);
 	var priceArray1 = [];
-	priceArray1 = priceArray();
+	priceArray1 = this.priceArray();
 	var builtQryArray = [];
 	for(var i = 0; i < qryTempArray1.length; i++){
 		for(var z = 0; z < priceArray1[i].pricesMin.length; z++){
@@ -77,8 +79,8 @@ function qryBuilder (){
 	return builtQryArray;
 }
 //function to multiply the queries based on the title array
-function multiReqByTitle(){
-	var sourceArray = qryBuilder();
+queryArray.prototype.multiReqByTitle = function(){
+	var sourceArray = this.qryBuilder();
 	var superArray = [];
 	sourceArray.map(function(query){
 		query.Title.forEach(function(element){
@@ -95,7 +97,7 @@ function multiReqByTitle(){
 		});
 	});
 	console.log(superArray.length + " queries have been built!");
-	return superArray;
+		return superArray;
 }
 //expose module
-module.exports = multiReqByTitle;
+module.exports = queryArray;

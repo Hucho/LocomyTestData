@@ -10,14 +10,16 @@ var opHelper = new OperationHelper(cred);
 //async
 var async = require("async");
 //require mongo models with mongo connection
-var mongoSetup = require('../app/locomyDB.js');
+var mongoSetup = require('../config/locomyDB.js');
 //require randomCoordinates module and input GeoJson file
 var randCoords = require('../app/randomCoordinates');
 var coords = new randCoords(require('../config/geo/GeoJson/usa_wgs1984.json'));
-//requrie function which builds the Querry Array
-var QueryBuilder = require('../app/qrybuilder');
-//genreate Array of Amazon API requests
-var querryArray = QueryBuilder();
+//requrire the query factory class
+var queryFactory = require('../app/qrybuilder');
+//create a new instance of the queryFactory class
+var QueryBuilder = new queryFactory(require('../config/searchParams_EN.json'));
+//exectur query building method of queryFactory class
+var queryArray = QueryBuilder.multiReqByTitle();
 //fire requests to Amazon Api and store the data received===================================
 //save data from Amazon request to MongoDB
 function saveData(results){
@@ -30,6 +32,8 @@ function saveData(results){
 				var tempCoords = coords.getCoords();
 				var newItem = new mongoSetup.products({
 						id: item.ASIN[0],
+						category_id: item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0],
+						category: item.BrowseNodes[0].BrowseNode[0].Name[0],
 						title: noTitle (item.ItemAttributes[0].Title),
 						description: undefinedField (item.ItemAttributes[0].Feature),
 						image_link: noPictureHandler (item.MediumImage),
@@ -39,7 +43,7 @@ function saveData(results){
 						x: tempCoords[0],
 						y: tempCoords[1]
 						})
-						newItem.save(function(err,res){
+						newItem.save(function(err){
 							if(err) logger.log('debug',err);
 							else {logger.log('debug', newItem.title);
 							next();}
@@ -52,7 +56,7 @@ function saveData(results){
 the result to mongoDB; after do a timeout...*/
 function runQueries(){
 	//dequeue query array
-	var query = querryArray.pop();
+	var query = queryArray.pop();
 	//get time when function is started
 	var hrStart = process.hrtime();
 	if(query){
@@ -61,7 +65,7 @@ function runQueries(){
 			/*here is the entry point for the saveData function, which writes to MongoDB
 			in my case*/
 			saveData(results);
-			//get time between request initiation and saving in MonogDB
+						//get time between request initiation and saving in MonogDB
 			var diff = process.hrtime(hrStart);
 			setTimeout(function(){
 			runQueries();
