@@ -11,29 +11,33 @@ var logger = require('./config/logger');
 because it can only be once compiled*/
 var mongoSetup = require('./app/qryHandler').mongoSetup;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
-
-//requrire the query factory class
-var queryFactory = require('./app/qrybuilder');
-//create a new instance of the queryFactory class
-var QueryBuilder = new queryFactory(require('./config/searchParams_EN.json'));
 //require QueryHandler class
 var QueryHandler = require('./app/qryHandler');
-//instatiate new QueryHandler object and inject querry array
-var queryRun1 = new QueryHandler(QueryBuilder.multiReqByTitle());
-queryRun1.runQueries();
+//require mongo query class to get queries from MongoDB
+var mongoquery = require('./config/queryMongo');
+var QueryMongo = new mongoquery;
+//QueryMongo.queriesToMongoDB();
 
-//TEST
-// var queryDB = require('./config/queryDB');
-// var mongoquery = require('./config/queryMongo');
-// var query = {'SearchIndex': 'All'};
-// var QueryMongo = new mongoquery(query);
-// var queryArray = QueryMongo.getQueries(array);
+function array (doc){
+	var tempArray = doc;
+	console.log(tempArray.length +" queries fetched from MongoDB");
+	var queryArray = [];
+	tempArray.map(function(query){
+		queryArray.push({
+		'SearchIndex': query[0].SearchIndex,
+		'Title': query[0].Title,
+		'MinimumPrice': query[0].MinimumPrice,
+		'MaximumPrice': query[0].MaximumPrice,
+		'Keywords': query[0].Keywords,
+		'ResponseGroup': query[0].ResponseGroup,
+		'sort': query[0].sort
+		});
+	});
+	var queryRun1 = new QueryHandler(queryArray);
+	//queryRun1.runQueries();
+}
 
-// function array (doc){
-// 	queryArray = doc;
-// 	console.log(queryArray[0]);
-// }
-
+//QueryMongo.getQueries(array);
 
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data

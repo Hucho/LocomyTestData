@@ -20,7 +20,7 @@ var query = new Schema ({
 	sort: String,
 	queryState: Boolean,
 	query_id: Number
-});
+	}, {collection: 'queries'});
 var model = {
 	queries: db1.model('queries', query)
 }

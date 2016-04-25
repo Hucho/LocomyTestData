@@ -79,10 +79,10 @@ QueryHandler.prototype.runQueries = function(){
 			}).catch(function(err){
 				if(err.statusCode == 503){
 					logger.log('error', "Error 503!");
-					this.runQueries();}
+					self.runQueries();}
 				else if (err.statusCode == undefined) {
 					logger.log('error', err);
-					this.runQueries();}
+					self.runQueries();}
 			});
 		}
 		else {
@@ -98,6 +98,12 @@ QueryHandler.prototype.makeRequest = function(query){
 			else resolve(results)
 			});
 	});
+}
+//change querystate of request in MongoDB after sending request to Amazon========
+QueryHandler.prototype.chnageQryState = function(query){
+
+	//content
+
 }
 //error handling=================================================================
 //handle problems with undefined title
