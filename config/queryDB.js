@@ -1,10 +1,11 @@
 //config/queryDB.js
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var uri = 'mongodb://localhost/queriesdb';
 
 function queryDB(mongoose, Schema){
 //connect to database
-var db1 = mongoose.createConnection('mongodb://localhost/queriesdb');
+var db1 = mongoose.createConnection(uri);
 db1.on('error', console.error);
 db1.once('open', function(){console.log('Connection to QueryDB successfully established')});
 //define queriesdb model

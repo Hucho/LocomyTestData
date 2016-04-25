@@ -11,6 +11,8 @@
 	"apac": "1.5.0",
 	"terraformer": "latest",
 	"terraformer-arcgis-parser":"latest",
-	"winston": "latest"
+	"winston": "latest",
+	"bluebird": "latest",
+	"mongoose-bluebird-utils": "latest"
 	}
 }

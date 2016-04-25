@@ -2,19 +2,39 @@
 //modules ==============================================================================
 var express = require ("express");
 var app = express();
+var async = require('async');
 var bodyParser = require("body-Parser");
 var methodOverride = require("method-override");
 var util = require('util');
 var logger = require('./config/logger');
-//TEST
-var mongoQuery = require('./config/queryMongo');
 /*require locomyDB model from qryHandler module,
 because it can only be once compiled*/
 var mongoSetup = require('./app/qryHandler').mongoSetup;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
-var runQueriesAsync = require('./app/qryHandler');
-logger.log('debug','Queries are being processed...');
-//runQueriesAsync();
+
+//requrire the query factory class
+var queryFactory = require('./app/qrybuilder');
+//create a new instance of the queryFactory class
+var QueryBuilder = new queryFactory(require('./config/searchParams_EN.json'));
+//require QueryHandler class
+var QueryHandler = require('./app/qryHandler');
+//instatiate new QueryHandler object and inject querry array
+var queryRun1 = new QueryHandler(QueryBuilder.multiReqByTitle());
+queryRun1.runQueries();
+
+//TEST
+// var queryDB = require('./config/queryDB');
+// var mongoquery = require('./config/queryMongo');
+// var query = {'SearchIndex': 'All'};
+// var QueryMongo = new mongoquery(query);
+// var queryArray = QueryMongo.getQueries(array);
+
+// function array (doc){
+// 	queryArray = doc;
+// 	console.log(queryArray[0]);
+// }
+
+
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data
 has been written*/
@@ -51,7 +71,6 @@ function badRequest(){
 						})	
 		})
 }
-//run bad request
 badRequest();
 //parse application/json
 app.use(bodyParser.json());

@@ -14,15 +14,15 @@ var mongoSetup = require('../config/locomyDB.js');
 //require randomCoordinates module and input GeoJson file
 var randCoords = require('../app/randomCoordinates');
 var coords = new randCoords(require('../config/geo/GeoJson/usa_wgs1984.json'));
-//requrire the query factory class
-var queryFactory = require('../app/qrybuilder');
-//create a new instance of the queryFactory class
-var QueryBuilder = new queryFactory(require('../config/searchParams_EN.json'));
-//exectur query building method of queryFactory class
-var queryArray = QueryBuilder.multiReqByTitle();
+
+function QueryHandler(queryArray){
+	this.queryArray = queryArray;
+}
+
 //fire requests to Amazon Api and store the data received===================================
 //save data from Amazon request to MongoDB
-function saveData(results){
+QueryHandler.prototype.saveData = function(results){
+		var self = this;
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
 			logger.log('warn', 'No result from makeRequest!');
 			return;}
@@ -34,12 +34,12 @@ function saveData(results){
 						id: item.ASIN[0],
 						category_id: item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0],
 						category: item.BrowseNodes[0].BrowseNode[0].Name[0],
-						title: noTitle (item.ItemAttributes[0].Title),
-						description: undefinedField (item.ItemAttributes[0].Feature),
-						image_link: noPictureHandler (item.MediumImage),
+						title: self.noTitle (item.ItemAttributes[0].Title),
+						description: self.undefinedField (item.ItemAttributes[0].Feature),
+						image_link: self.noPictureHandler (item.MediumImage),
 						//brand = manufacturere field from Amazon
-						brand: noManufacHandler (item.ItemAttributes[0].Manufacturer),
-						price: undefinedPrices (item.ItemAttributes[0].ListPrice),
+						brand: self.noManufacHandler (item.ItemAttributes[0].Manufacturer),
+						price: self.undefinedPrices (item.ItemAttributes[0].ListPrice),
 						x: tempCoords[0],
 						y: tempCoords[1]
 						})
@@ -54,21 +54,22 @@ function saveData(results){
 		return;}}
 /*batch query all requests from the array and then wirte
 the result to mongoDB; after do a timeout...*/
-function runQueries(){
+QueryHandler.prototype.runQueries = function(){
+	var self = this;
 	//dequeue query array
-	var query = queryArray.pop();
+	var query = this.queryArray.pop();
 	//get time when function is started
 	var hrStart = process.hrtime();
 	if(query){
-		makeRequest(query).then(function(results, err){
+		this.makeRequest(query).then(function(results, err){
 			logger.log('info',"function makeRequest: "+ query.SearchIndex +", "+ query.Title);
 			/*here is the entry point for the saveData function, which writes to MongoDB
 			in my case*/
-			saveData(results);
-						//get time between request initiation and saving in MonogDB
+			self.saveData(results);
+			//get time between request initiation and saving in MonogDB
 			var diff = process.hrtime(hrStart);
 			setTimeout(function(){
-			runQueries();
+			self.runQueries();
 			/*set query delay according to time elapsed	since last
 			query minus query delay expected by Amazon server*/	
 			}, 1001 - ((diff[0]*1000) + (diff[1]/1000000)));
@@ -78,10 +79,10 @@ function runQueries(){
 			}).catch(function(err){
 				if(err.statusCode == 503){
 					logger.log('error', "Error 503!");
-					runQueries();}
+					this.runQueries();}
 				else if (err.statusCode == undefined) {
 					logger.log('error', err);
-					runQueries();}
+					this.runQueries();}
 			});
 		}
 		else {
@@ -90,43 +91,44 @@ function runQueries(){
 		}	
 	}
 //make a request and resolve the result
-function makeRequest(query){
+QueryHandler.prototype.makeRequest = function(query){
 	return new Promise(function(resolve, reject){
 		opHelper.execute('ItemSearch', query, function(err, results){
 			if(err) return reject(err)
 			else resolve(results)
 			});
-	});}
+	});
+}
 //error handling=================================================================
 //handle problems with undefined title
-function noTitle(titleLink){
-	if(titleLink == undefined){return '';}
-	else{ return titleLink[0]; }
+QueryHandler.prototype.noTitle = function(titleLink){
+		if(titleLink == undefined){return '';}
+		else{return titleLink[0];}
 	}
 //handle problem with undefined item properties
-function undefinedField (field){
+QueryHandler.prototype.undefinedField = function(field){
 		var value = String;
-	 			if (field == undefined) {value ="";}
-		 			else if (field.constructor == Array) {value = field.join(',');}
-		 			else if (field.constructor == Object) {value = field;}
-			 		return value;
-				 	}
+	 		if (field == undefined) {value ="";}
+		 		else if (field.constructor == Array) {value = field.join(',');}
+		 		else if (field.constructor == Object) {value = field;}
+			 	return value;
+	}
 //handle problems with undefined prices
-function undefinedPrices(price){
+QueryHandler.prototype.undefinedPrices = function(price){
 		if(price == undefined) {return ''}
 		else {return price[0].Amount[0]}
-		}
+	}
 //handle problems for products without a picture
-function noPictureHandler(picturelink){
+QueryHandler.prototype.noPictureHandler = function(picturelink){
 		if(picturelink == undefined) {return "";}
 		else {return picturelink[0].URL[0];}s
-		}
+	}
 //handle problems for products without manufacturer
-function noManufacHandler (manufLink){
+QueryHandler.prototype.noManufacHandler = function(manufLink){
 		if(manufLink == undefined){return "";}
 		else{return manufLink[0];}
-		}
-//export query function
-module.exports = runQueries;
+	}
+//export query class
+module.exports = QueryHandler;
 //export mongoose model
 module.exports.mongoSetup = mongoSetup;
