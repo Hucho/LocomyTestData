@@ -11,12 +11,15 @@ var opHelper = new OperationHelper(cred);
 var async = require("async");
 //require mongo models with mongo connection
 var mongoSetup = require('../config/locomyDB.js');
+//require QueryDB mongoose setup
+var queryDB = require('../config/queryMongo').queryDB;
 //require randomCoordinates module and input GeoJson file
 var randCoords = require('../app/randomCoordinates');
 var coords = new randCoords(require('../config/geo/GeoJson/usa_wgs1984.json'));
 
-function QueryHandler(queryArray){
+function QueryHandler(queryArray, queryInfoArray){
 	this.queryArray = queryArray;
+	this.queryInfoArray = queryInfoArray;
 }
 
 //fire requests to Amazon Api and store the data received===================================
@@ -26,7 +29,7 @@ QueryHandler.prototype.saveData = function(results){
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
 			logger.log('warn', 'No result from makeRequest!');
 			return;}
-		else {
+		else{
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
 			async.each(itemArray, function(item, next){
 				var tempCoords = coords.getCoords();
@@ -58,6 +61,7 @@ QueryHandler.prototype.runQueries = function(){
 	var self = this;
 	//dequeue query array
 	var query = this.queryArray.pop();
+	var queryInfo = this.queryInfoArray.pop();
 	//get time when function is started
 	var hrStart = process.hrtime();
 	if(query){
@@ -66,6 +70,7 @@ QueryHandler.prototype.runQueries = function(){
 			/*here is the entry point for the saveData function, which writes to MongoDB
 			in my case*/
 			self.saveData(results);
+			self.changeQryState(queryInfo);
 			//get time between request initiation and saving in MonogDB
 			var diff = process.hrtime(hrStart);
 			setTimeout(function(){
@@ -89,7 +94,7 @@ QueryHandler.prototype.runQueries = function(){
 			console.log("All queries processed!");
 			return;
 		}	
-	}
+}
 //make a request and resolve the result
 QueryHandler.prototype.makeRequest = function(query){
 	return new Promise(function(resolve, reject){
@@ -100,10 +105,15 @@ QueryHandler.prototype.makeRequest = function(query){
 	});
 }
 //change querystate of request in MongoDB after sending request to Amazon========
-QueryHandler.prototype.chnageQryState = function(query){
-
-	//content
-
+QueryHandler.prototype.changeQryState = function(queryInfo){
+ var query = {query_id: queryInfo.query_id };
+ queryDB.queries.findOneAndUpdate(query, {$set: {queryState: true}},{new: true},function(err, doc){
+		if(err){console.log(err);
+			return;}
+		else {console.log("Query set to true/executed!");
+			console.log(doc);
+			return;}
+	});
 }
 //error handling=================================================================
 //handle problems with undefined title

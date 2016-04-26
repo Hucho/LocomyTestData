@@ -31,6 +31,7 @@ var product = new Schema ({
 	is_bundle: Boolean,
 	link: String,
 	mobile_link: String,
+	//now the medium image from amz is saved
 	image_link: String,
 	additional_image_links: String,
 	content_language: String,
@@ -231,5 +232,5 @@ var models = {
 	system_settings: db.model('system_settings', system_setting)
 	};
 return models;
-};
+}
 module.exports = mongoSetup(mongoose, Schema);

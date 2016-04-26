@@ -15,29 +15,35 @@ var mongoSetup = require('./app/qryHandler').mongoSetup;
 var QueryHandler = require('./app/qryHandler');
 //require mongo query class to get queries from MongoDB
 var mongoquery = require('./config/queryMongo');
+//instantiate queryMongo class 
 var QueryMongo = new mongoquery;
+//write queries to MongoDB
 //QueryMongo.queriesToMongoDB();
 
 function array (doc){
 	var tempArray = doc;
 	console.log(tempArray.length +" queries fetched from MongoDB");
 	var queryArray = [];
+	var queryInfoArray = [];
 	tempArray.map(function(query){
 		queryArray.push({
-		'SearchIndex': query[0].SearchIndex,
-		'Title': query[0].Title,
-		'MinimumPrice': query[0].MinimumPrice,
-		'MaximumPrice': query[0].MaximumPrice,
-		'Keywords': query[0].Keywords,
-		'ResponseGroup': query[0].ResponseGroup,
-		'sort': query[0].sort
+		'SearchIndex': query.SearchIndex,
+		'Title': query.Title,
+		'MinimumPrice': query.MinimumPrice,
+		'MaximumPrice': query.MaximumPrice,
+		'Keywords': query.Keywords,
+		'ResponseGroup': query.ResponseGroup,
+		'sort': query.sort
+		});
+		queryInfoArray.push({
+		'query_id': query.query_id
 		});
 	});
-	var queryRun1 = new QueryHandler(queryArray);
-	//queryRun1.runQueries();
+	var queryRun1 = new QueryHandler(queryArray, queryInfoArray);
+	queryRun1.runQueries();
 }
 
-//QueryMongo.getQueries(array);
+QueryMongo.getQueries(array);
 
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data

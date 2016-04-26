@@ -11,15 +11,12 @@ var queryDB = require('./queryDB');
 var queryFactory = require('../app/qrybuilder');
 //create a new instance of the queryFactory class
 var QueryBuilder = new queryFactory(require('./searchParams_EN.json'));
-
+//class constructor
 function QueryMongo(){}
-
-	QueryMongo.prototype.queriesToMongoDB = function (){
-	//execute query building method of queryFactory class
+QueryMongo.prototype.queriesToMongoDB = function (){
+//execute query building method of queryFactory class
 	var queries = QueryBuilder.multiReqByTitle();
-
 	async.each(queries, function(query, next){
-
 		var newQuery = new queryDB.queries({
 			SearchIndex: query.SearchIndex,
 			Title: query.Title,
@@ -38,10 +35,10 @@ function QueryMongo(){}
 		});
 	}, function(){
 		logger.log('debug', "All queries stored in MongoDB");
+		return;
 	});
 }
-
-	//queriesToMongoDB();
+//queriesToMongoDB();
 	QueryMongo.prototype.getQueries = function(callback){
 		queryDB.queries.find({'queryState': false}, function(err, doc){
 			if(err){console.log(err);
@@ -54,5 +51,7 @@ function QueryMongo(){}
 			}
 		});
 	}
-
+//export class
 module.exports = QueryMongo;
+//export mongoose model for queriesDB
+module.exports.queryDB = queryDB;
