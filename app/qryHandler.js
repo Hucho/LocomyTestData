@@ -40,17 +40,30 @@ QueryHandler.prototype.saveData = function(results){
 						title: self.noTitle (item.ItemAttributes[0].Title),
 						description: self.undefinedField (item.ItemAttributes[0].Feature),
 						image_link: self.noPictureHandler (item.MediumImage),
+						//imageSets is stored as Object
+						//imageSet: result.ItemSearchResponse.Items[0].Item[0].ImageSets[0].ImageSet[0]
 						//brand = manufacturere field from Amazon
 						brand: self.noManufacHandler (item.ItemAttributes[0].Manufacturer),
 						price: self.undefinedPrices (item.ItemAttributes[0].ListPrice),
 						x: tempCoords[0],
 						y: tempCoords[1]
-						})
+						});
 						newItem.save(function(err){
 							if(err) logger.log('debug',err);
 							else {logger.log('debug', newItem.title);
+							//next();
+						}
+						});
+				var newCat = new mongoSetup.product_categorys({
+						category_id: item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0],
+						name: item.BrowseNodes[0].BrowseNode[0].Name[0],	
+						});
+						newCat.save(function(err){
+							if(err) logger.log('debug',err);
+							else {logger.log('debug', newCat.name);
 							next();}
 						});
+
 					}, function(){
 						logger.log('debug', "All items saved to MongoDB!");
 					});	
@@ -124,7 +137,7 @@ QueryHandler.prototype.noTitle = function(titleLink){
 //handle problem with undefined item properties
 QueryHandler.prototype.undefinedField = function(field){
 		var value = String;
-	 		if (field == undefined) {value ="";}
+	 		if (field == undefined || !field.length) {value ="";}
 		 		else if (field.constructor == Array) {value = field.join(',');}
 		 		else if (field.constructor == Object) {value = field;}
 			 	return value;

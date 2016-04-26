@@ -33,6 +33,8 @@ var product = new Schema ({
 	mobile_link: String,
 	//now the medium image from amz is saved
 	image_link: String,
+	//imageSet stored as Object
+	imageSet: Object,
 	additional_image_links: String,
 	content_language: String,
 	target_country: String,

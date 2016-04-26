@@ -42,7 +42,7 @@ function array (doc){
 	var queryRun1 = new QueryHandler(queryArray, queryInfoArray);
 	queryRun1.runQueries();
 }
-
+//START APP AND RUN ALL QUERIES
 QueryMongo.getQueries(array);
 
 /*function which brings the results from Amazon
