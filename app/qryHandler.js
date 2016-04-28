@@ -27,7 +27,7 @@ function QueryHandler(queryArray, queryInfoArray){
 QueryHandler.prototype.saveData = function(results){
 		var self = this;
 		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
-			logger.log('warn', 'No result from makeRequest!');
+			logger.log('warn', 'No result from with this query!');
 			return;}
 		else{
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
@@ -35,13 +35,13 @@ QueryHandler.prototype.saveData = function(results){
 				var tempCoords = coords.getCoords();
 				var newItem = new mongoSetup.products({
 						id: item.ASIN[0],
-						category_id: item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0],
-						category: item.BrowseNodes[0].BrowseNode[0].Name[0],
+						category_id: self.noBrowseNodeID(item),
+						category: self.noBrowseNodeName(item),
 						title: self.noTitle (item.ItemAttributes[0].Title),
 						description: self.undefinedField (item.ItemAttributes[0].Feature),
 						image_link: self.noPictureHandler (item.MediumImage),
-						//imageSets is stored as Object
-						//imageSet: result.ItemSearchResponse.Items[0].Item[0].ImageSets[0].ImageSet[0]
+						//imageSets, 
+						//imageSet.SwatchImage: item.ImageSets[0].ImageSet[0].SwatchImage[0].URL[0],
 						//brand = manufacturere field from Amazon
 						brand: self.noManufacHandler (item.ItemAttributes[0].Manufacturer),
 						price: self.undefinedPrices (item.ItemAttributes[0].ListPrice),
@@ -49,17 +49,19 @@ QueryHandler.prototype.saveData = function(results){
 						y: tempCoords[1]
 						});
 						newItem.save(function(err){
-							if(err) logger.log('debug',err);
+							if(err == null) logger.log('info', err);
+							else if(err == 11000) logger.log('info', "Prodcut already in DB!");
 							else {logger.log('debug', newItem.title);
 							//next();
 						}
 						});
 				var newCat = new mongoSetup.product_categorys({
-						category_id: item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0],
-						name: item.BrowseNodes[0].BrowseNode[0].Name[0],	
+						category_id: self.noBrowseNodeID(item),
+						name: self.noBrowseNodeName(item)
 						});
 						newCat.save(function(err){
-							if(err) logger.log('debug',err);
+							if(err == null) logger.log('info', err);
+							else if(err == 11000) logger.log('info', "Category already in DB!");
 							else {logger.log('debug', newCat.name);
 							next();}
 						});
@@ -79,7 +81,7 @@ QueryHandler.prototype.runQueries = function(){
 	var hrStart = process.hrtime();
 	if(query){
 		this.makeRequest(query).then(function(results, err){
-			logger.log('info',"function makeRequest: "+ query.SearchIndex +", "+ query.Title);
+			logger.log('info',"Request: "+ JSON.stringify(query));
 			/*here is the entry point for the saveData function, which writes to MongoDB
 			in my case*/
 			self.saveData(results);
@@ -104,7 +106,7 @@ QueryHandler.prototype.runQueries = function(){
 			});
 		}
 		else {
-			console.log("All queries processed!");
+			logger.log('debug', "All queries processed!");
 			return;
 		}	
 }
@@ -121,14 +123,23 @@ QueryHandler.prototype.makeRequest = function(query){
 QueryHandler.prototype.changeQryState = function(queryInfo){
  var query = {query_id: queryInfo.query_id };
  queryDB.queries.findOneAndUpdate(query, {$set: {queryState: true}},{new: true},function(err, doc){
-		if(err){console.log(err);
+		if(err){logger.log('error', err);
 			return;}
-		else {console.log("Query set to true/executed!");
-			console.log(doc);
+		else {logger.log('debug', "Query executed, new state saved to MongoDB!");
 			return;}
 	});
 }
 //error handling=================================================================
+//handle problems with category id resp. missing BrowseNode Information
+QueryHandler.prototype.noBrowseNodeID = function(item){
+	if(item.BrowseNodes == null || item.BrowseNodes == undefined) return '';
+	else return item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0];
+}
+//handle problems with category name resp. missing BrowseNode Information
+QueryHandler.prototype.noBrowseNodeName = function(item){
+	if(item.BrowseNodes == null || item.BrowseNodes == undefined) return '';
+	else return item.BrowseNodes[0].BrowseNode[0].Name[0];
+}
 //handle problems with undefined title
 QueryHandler.prototype.noTitle = function(titleLink){
 		if(titleLink == undefined){return '';}
@@ -150,7 +161,7 @@ QueryHandler.prototype.undefinedPrices = function(price){
 //handle problems for products without a picture
 QueryHandler.prototype.noPictureHandler = function(picturelink){
 		if(picturelink == undefined) {return "";}
-		else {return picturelink[0].URL[0];}s
+		else {return picturelink[0].URL[0]};
 	}
 //handle problems for products without manufacturer
 QueryHandler.prototype.noManufacHandler = function(manufLink){
