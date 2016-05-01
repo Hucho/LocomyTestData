@@ -26,8 +26,8 @@ function QueryHandler(queryArray, queryInfoArray){
 //save data from Amazon request to MongoDB
 QueryHandler.prototype.saveData = function(results){
 		var self = this;
-		if(results.ItemSearchResponse.Items[0].TotalResults[0] == '0') {
-			logger.log('warn', 'No result from with this query!');
+		if(!results.ItemSearchResponse.Items[0].Item) {
+			logger.log('warn', 'No result from this query!');
 			return;}
 		else{
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
@@ -37,19 +37,27 @@ QueryHandler.prototype.saveData = function(results){
 						id: item.ASIN[0],
 						category_id: self.noBrowseNodeID(item),
 						category: self.noBrowseNodeName(item),
-						title: self.noTitle (item.ItemAttributes[0].Title),
-						description: self.undefinedField (item.ItemAttributes[0].Feature),
-						image_link: self.noPictureHandler (item.MediumImage),
+						title: self.noTitle(item),
+						description: self.noDescription(item),
+						image_link: self.noMediumImage(item),
 						//imageSets, 
-						//imageSet.SwatchImage: item.ImageSets[0].ImageSet[0].SwatchImage[0].URL[0],
+						imageSet: {
+							SwatchImage: self.noImageSet_XS(item),
+							SmallImage: self.noImageSet_S(item),
+							ThumbnailImage: self.noImageSet_Th(item),
+							TinyImage: self.noImageSet_T(item),
+							MediumImage: self.noImageSet_M(item),
+							LargeImage: self.noImageSet_L(item),
+							HiResImage: self.noImageSet_XL(item)
+						},
 						//brand = manufacturere field from Amazon
-						brand: self.noManufacHandler (item.ItemAttributes[0].Manufacturer),
-						price: self.undefinedPrices (item.ItemAttributes[0].ListPrice),
+						brand: self.noManufacturer(item),
+						price: self.noPrice(item),
 						x: tempCoords[0],
 						y: tempCoords[1]
 						});
 						newItem.save(function(err){
-							if(err == null) logger.log('info', err);
+							if(err == null) logger.log('info', "Null-Error in mongoose save function (product)");
 							else if(err == 11000) logger.log('info', "Prodcut already in DB!");
 							else {logger.log('debug', newItem.title);
 							//next();
@@ -60,7 +68,7 @@ QueryHandler.prototype.saveData = function(results){
 						name: self.noBrowseNodeName(item)
 						});
 						newCat.save(function(err){
-							if(err == null) logger.log('info', err);
+							if(err == null) logger.log('info', "Null-Error in mongoose save function (category)");
 							else if(err == 11000) logger.log('info', "Category already in DB!");
 							else {logger.log('debug', newCat.name);
 							next();}
@@ -129,44 +137,82 @@ QueryHandler.prototype.changeQryState = function(queryInfo){
 			return;}
 	});
 }
+
 //error handling=================================================================
+//handle problems with missing ImageSets
+
+//handle problem with missing ImageSet: SwatchImage
+QueryHandler.prototype.noImageSet_XS = function(item){
+	if(item.ImageSets && item.ImageSets[0].ImageSet[0].SwatchImage) return item.ImageSets[0].ImageSet[0].SwatchImage[0].URL[0];
+	else return '';
+}
+//handle problem with missing ImageSet: SmallImage
+QueryHandler.prototype.noImageSet_S = function(item){
+	if(item.ImageSets && item.ImageSets[0].ImageSet[0].SmallImage) return item.ImageSets[0].ImageSet[0].SmallImage[0].URL[0];
+	else return '';
+}
+//handle problem with missing ImageSet: ThumbnailImage
+QueryHandler.prototype.noImageSet_Th = function(item){
+	if(item.ImageSets && item.ImageSets[0].ImageSet[0].ThumbnailImage) return item.ImageSets[0].ImageSet[0].ThumbnailImage[0].URL[0];
+	else return '';
+}
+//handle problem with missing ImageSet: TinyImage
+QueryHandler.prototype.noImageSet_T = function(item){
+	if(item.ImageSets && item.ImageSets[0].ImageSet[0].TinyImage) return item.ImageSets[0].ImageSet[0].TinyImage[0].URL[0];
+	else return '';
+}
+//handle problem with missing ImageSet: MediumImage
+QueryHandler.prototype.noImageSet_M = function(item){
+	if(item.ImageSets && item.ImageSets[0].ImageSet[0].MediumImage) return item.ImageSets[0].ImageSet[0].MediumImage[0].URL[0];
+	else return '';
+}
+//handle problem with missing ImageSet: LargeImage
+QueryHandler.prototype.noImageSet_L = function(item){
+	if(item.ImageSets && item.ImageSets[0].ImageSet[0].LargeImage) return item.ImageSets[0].ImageSet[0].LargeImage[0].URL[0];
+	else return '';
+}
+//handle problem with missing ImageSet: HiResImage
+QueryHandler.prototype.noImageSet_XL = function(item){
+	if(item.ImageSets && item.ImageSets[0].ImageSet[0].HiResImage) return item.ImageSets[0].ImageSet[0].HiResImage[0].URL[0];
+	else return '';
+}
+//======================================================================================
+
+//handle versatile problems
 //handle problems with category id resp. missing BrowseNode Information
 QueryHandler.prototype.noBrowseNodeID = function(item){
-	if(item.BrowseNodes == null || item.BrowseNodes == undefined) return '';
-	else return item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0];
+	if(item.BrowseNodes) return item.BrowseNodes[0].BrowseNode[0].BrowseNodeId[0];
+	else return '';
 }
 //handle problems with category name resp. missing BrowseNode Information
 QueryHandler.prototype.noBrowseNodeName = function(item){
-	if(item.BrowseNodes == null || item.BrowseNodes == undefined) return '';
-	else return item.BrowseNodes[0].BrowseNode[0].Name[0];
+	if(item.BrowseNodes) return item.BrowseNodes[0].BrowseNode[0].Name[0];
+	else return '';
 }
 //handle problems with undefined title
-QueryHandler.prototype.noTitle = function(titleLink){
-		if(titleLink == undefined){return '';}
-		else{return titleLink[0];}
+QueryHandler.prototype.noTitle = function(item){
+		if(item.ItemAttributes && item.ItemAttributes[0].Title) return item.ItemAttributes[0].Title;
+		else return '';
 	}
 //handle problem with undefined item properties
-QueryHandler.prototype.undefinedField = function(field){
-		var value = String;
-	 		if (field == undefined || !field.length) {value ="";}
-		 		else if (field.constructor == Array) {value = field.join(',');}
-		 		else if (field.constructor == Object) {value = field;}
-			 	return value;
+QueryHandler.prototype.noDescription = function(item){
+	if(item.ItemAttributes && item.ItemAttributes[0].Feature) return item.ItemAttributes[0].Feature.join(", ");
+	else return '';
 	}
 //handle problems with undefined prices
-QueryHandler.prototype.undefinedPrices = function(price){
-		if(price == undefined) {return ''}
-		else {return price[0].Amount[0]}
+QueryHandler.prototype.noPrice = function(item){
+		if(item.ItemAttributes[0].ListPrice) return item.ItemAttributes[0].ListPrice[0].Amount[0];
+		else return '';
 	}
 //handle problems for products without a picture
-QueryHandler.prototype.noPictureHandler = function(picturelink){
-		if(picturelink == undefined) {return "";}
-		else {return picturelink[0].URL[0]};
+QueryHandler.prototype.noMediumImage = function(item){
+		if(item.MediumImage) return item.MediumImage[0].URL[0];
+		else return '';
 	}
 //handle problems for products without manufacturer
-QueryHandler.prototype.noManufacHandler = function(manufLink){
-		if(manufLink == undefined){return "";}
-		else{return manufLink[0];}
+QueryHandler.prototype.noManufacturer = function(item){
+		if(item.ItemAttributes[0].Manufacturer) return item.ItemAttributes[0].Manufacturer[0];
+		else return '';
 	}
 //export query class
 module.exports = QueryHandler;

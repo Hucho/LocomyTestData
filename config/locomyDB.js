@@ -33,15 +33,16 @@ var product = new Schema ({
 	mobile_link: String,
 	//now the medium image from amz is saved
 	image_link: String,
-	//imageSet stored as Object
-	// imageSet: {
-	// 	SwatchImage: String,
-	// 	SmallImage: String,
-	// 	ThumbnailImage: String,
-	// 	TinyImage: String,
-	// 	MediumImage: String,
-	// 	LargeImage: String
-	// 	},
+	//imageSet
+	imageSet: {
+		SwatchImage: String,
+		SmallImage: String,
+		ThumbnailImage: String,
+		TinyImage: String,
+		MediumImage: String,
+		LargeImage: String,
+		HiResImage: String
+		},
 	additional_image_links: String,
 	content_language: String,
 	target_country: String,

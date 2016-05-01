@@ -67,10 +67,10 @@ function badRequest(){
 	var opHelper = new OperationHelper(cred);
 	app.get('/BadRequest', function(req, res){
 		opHelper.execute('ItemSearch', {
-		 	  'SearchIndex': 'Collectibles',
-			  'Title': 'Collectibles',
-			  'MinimumPrice': '9500',
-			  'MaximumPrice': '9750',
+		 	  'SearchIndex': 'HealthPersonalCare',
+			  'Title': 'Hair',
+			  'MinimumPrice': '3250',
+			  'MaximumPrice': '3500',
 			  'Keywords': '',
 			  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
 			  'sort': 'relevance'
