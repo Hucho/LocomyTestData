@@ -1,0 +1,434 @@
+[
+  {
+    "SearchIndex": "All",
+    "Title": [
+      ""
+    ],
+    "Keywords": "Men",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Beauty",
+    "Title": [
+      "Beauty"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Grocery",
+    "Title": [
+      "Grocery"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Industrial",
+    "Title": [
+      "Industrial"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "PetSupplies",
+    "Title": [
+      "PetSupplies"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "OfficeProducts",
+    "Title": [
+      "OfficeProducts"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Electronics",
+    "Title": [
+      "Electronics"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Magazines",
+    "Title": [
+      "Magazines"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Watches",
+    "Title": [
+      "Watches"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Jewelry",
+    "Title": [
+      "Jewelry"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Luggage",
+    "Title": [
+      "Luggage"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "MobileApps",
+    "Title": [
+      "MobileApps"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Photo",
+    "Title": [
+      "Photo"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Shoes",
+    "Title": [
+      "Shoes"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "KindleStore",
+    "Title": [
+      "KindleStore"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Automotive",
+    "Title": [
+      "Automotive"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Pantry",
+    "Title": [
+      "Pantry"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "MusicalInstruments",
+    "Title": [
+      "MusicalInstruments"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "OutdoorLiving",
+    "Title": [
+      "OutdoorLiving"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "GiftCards",
+    "Title": [
+      "GiftCards"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Toys",
+    "Title": [
+      "Toys"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "SportingGoods",
+    "Title": [
+      "SportingGoods"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "PCHardware",
+    "Title": [
+      "PCHardware"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Lighting",
+    "Title": [
+      "Lighting"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Outlet",
+    "Title": [
+      "Outlet"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Books",
+    "Title": [
+      "Books"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "VHS",
+    "Title": [
+      "VHS"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "MP3Downloads",
+    "Title": [
+      "MP3Downloads"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Tools",
+    "Title": [
+      "Tools"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Baby",
+    "Title": [
+      "Baby"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "HomeGarden",
+    "Title": [
+      "HomeGarden"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "MusicTracks",
+    "Title": [
+      ""
+    ],
+    "Keywords": "Rock",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "UnboxVideo",
+    "Title": [
+      "UnboxVideo"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "VideoGames",
+    "Title": [
+      "VideoGames"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "ForeignBooks",
+    "Title": [
+      "ForeignBooks"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Apparel",
+    "Title": [
+      "Apparel"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Marketplace",
+    "Title": [
+      "Marketplace"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "DVD",
+    "Title": [
+      "DVD"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "HomeImprovement",
+    "Title": [
+      "HomeImprovement"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Appliances",
+    "Title": [
+      "Appliances"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Kitchen",
+    "Title": [
+      "Kitchen"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Music",
+    "Title": [
+      "Music"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "SoftwareVideoGames",
+    "Title": [
+      "SoftwareVideoGames"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Video",
+    "Title": [
+      "Video"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Blended",
+    "Title": [
+      "Blended"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "HealthPersonalCare",
+    "Title": [
+      "HealthPersonalCare"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Classical",
+    "Title": [
+      "Classical"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  },
+  {
+    "SearchIndex": "Software",
+    "Title": [
+      "Software"
+    ],
+    "Keywords": "",
+    "MinimumPrice": 500,
+    "MaximumPrice": 10000
+  }
+]

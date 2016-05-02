@@ -43,7 +43,7 @@ function array (doc){
 	queryRun1.runQueries();
 }
 //START APP AND RUN ALL QUERIES
-QueryMongo.getQueries(array);
+//QueryMongo.getQueries(array);
 
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data
@@ -63,14 +63,14 @@ to retrieve categories list*/
 function badRequest(){
 	var OperationHelper = require('apac').OperationHelper;
 	var Credentials = require('./config/credentials');
-	var cred = new Credentials('EN');
-	var opHelper = new OperationHelper(cred);
+	var cred1 = new Credentials('DE');
+	var opHelper1 = new OperationHelper(cred1);
 	app.get('/BadRequest', function(req, res){
-		opHelper.execute('ItemSearch', {
-		 	  'SearchIndex': 'HealthPersonalCare',
-			  'Title': 'Hair',
-			  'MinimumPrice': '3250',
-			  'MaximumPrice': '3500',
+		opHelper1.execute('ItemSearch', {
+		 	  'SearchIndex': 'Beleuchtung',
+			  'Title': 'LED',
+			  'MinimumPrice': '10000',
+			  'MaximumPrice': '100000',
 			  'Keywords': '',
 			  'ResponseGroup': 'ItemAttributes, Images, BrowseNodes',
 			  'sort': 'relevance'

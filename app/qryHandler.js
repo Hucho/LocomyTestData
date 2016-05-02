@@ -3,7 +3,7 @@
 var logger = require('../config/logger');
 //generate new credetials for connecting the Amazon API
 var Credentials = require('../config/credentials');
-var cred = new Credentials('EN');
+var cred = new Credentials('US');
 //generate new OperationsHelper for Amazon Product API
 var OperationHelper = require('apac').OperationHelper;
 var opHelper = new OperationHelper(cred);

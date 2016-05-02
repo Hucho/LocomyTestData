@@ -10,14 +10,18 @@ var queryDB = require('./queryDB');
 //requrire the query factory class
 var queryFactory = require('../app/qrybuilder');
 //create a new instance of the queryFactory class
-var QueryBuilder = new queryFactory(require('./searchParams_EN.json'));
+//var QueryBuilder = new queryFactory(require('./searchParams_EN.json'));
 //class constructor
-function QueryMongo(){}
+function QueryMongo(params){
+	this.collection = params.collection;
+	this.queryBuilder = new queryFactory(params.json);
+}
+/////////////////////////////////seprate write and save module
 QueryMongo.prototype.queriesToMongoDB = function (){
 //execute query building method of queryFactory class
-	var queries = QueryBuilder.multiReqByTitle();
+	var queries = queryBuilder.multiReqByTitle();
 	async.each(queries, function(query, next){
-		var newQuery = new queryDB.queries({
+		var newQuery = new queryDB.this.collection({
 			SearchIndex: query.SearchIndex,
 			Title: query.Title,
 			MinimumPrice: query.MinimumPrice,
@@ -38,9 +42,9 @@ QueryMongo.prototype.queriesToMongoDB = function (){
 		return;
 	});
 }
-//queriesToMongoDB();
+//getQueries back from MongoDB for requesting Amazon server
 	QueryMongo.prototype.getQueries = function(callback){
-		queryDB.queries.find({'queryState': false}, function(err, doc){
+		queryDB.this.collection.find({'queryState': false}, function(err, doc){
 			if(err){console.log(err);
 				return;
 			}

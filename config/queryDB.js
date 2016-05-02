@@ -9,7 +9,7 @@ var db1 = mongoose.createConnection(uri);
 db1.on('error', console.error);
 db1.once('open', function(){console.log('Connection to QueryDB successfully established')});
 //define queriesdb model
-var query = new Schema ({
+var query_US = new Schema ({
 	SearchIndex: String,
 	Title: String,
 	MinimumPrice: Number,
@@ -20,10 +20,25 @@ var query = new Schema ({
 	sort: String,
 	queryState: Boolean,
 	query_id: Number
-	}, {collection: 'queries'});
-var model = {
-	queries: db1.model('queries', query)
+	}, {collection: 'queries_US'});
+
+var query_DE = new Schema ({
+	SearchIndex: String,
+	Title: String,
+	MinimumPrice: Number,
+	//set number in Euro/Dollar cents to set the increment between two queries
+	MaximumPrice: Number,
+	Keywords: String,
+	ResponseGroup: String,
+	sort: String,
+	queryState: Boolean,
+	query_id: Number
+	}, {collection: 'queries_DE'});
+
+var models = {
+	queries_US: db1.model('queries_US', query_US),
+	queries_DE: db1.model('queries_DE', query_DE),
 }
-return model;
+return models;
 }
 module.exports = queryDB(mongoose, Schema);
