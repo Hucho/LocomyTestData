@@ -4,55 +4,69 @@ var logger = require('../config/logger');
 //generate new credetials for connecting the Amazon API
 var Credentials = require('../config/credentials');
 var cred = new Credentials('US');
-//generate new OperationsHelper for Amazon Product API
+//require OperationsHelper for Amazon Product API
 var OperationHelper = require('apac').OperationHelper;
-var opHelper = new OperationHelper(cred);
 //async
 var async = require("async");
 //require mongo models with mongo connection
 var mongoSetup = require('../config/locomyDB.js');
 //require QueryDB mongoose setup
 var queryDB = require('../config/queryMongo').queryDB;
-//require randomCoordinates module and input GeoJson file
-var randCoords = require('../app/randomCoordinates');
-var coords = new randCoords(require('../config/geo/GeoJson/usa_wgs1984.json'));
 
-function QueryHandler(queryArray, queryInfoArray){
+function QueryHandler(queryArray, queryInfoArray, apiCode){
 	this.queryArray = queryArray;
 	this.queryInfoArray = queryInfoArray;
+	this.apiCode = apiCode;
+	var _this = this;
+	function getCountryCoords(){
+		//require randomCoordinates module and input GeoJson file
+		var randCoords = require('../app/randomCoordinates');
+		if(_this.apiCode == 'DE') return new randCoords(require('../config/geo/GeoJson/germany_wgs1984.json'));
+		else if(_this.apiCode == 'US') return new randCoords(require('../config/geo/GeoJson/usa_wgs1984.json'));
+		else{logger.log('error', "No GeoJson available in QueryHandler/getCountryCoords method!"); return;}
+	}
+	this.coords = getCountryCoords();
+	function getCredentials(){
+		if(_this.apiCode == 'DE') return new Credentials('DE');
+		else if(_this.apiCode == 'US') return new Credentials('US');
+		else{logger.log('error', "No credentials received!"); return;}
+	}
+	this.opHelper = new OperationHelper(getCredentials());
 }
 
 //fire requests to Amazon Api and store the data received===================================
 //save data from Amazon request to MongoDB
 QueryHandler.prototype.saveData = function(results){
-		var self = this;
+		var _this = this;
 		if(!results.ItemSearchResponse.Items[0].Item) {
 			logger.log('warn', 'No result from this query!');
 			return;}
 		else{
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
 			async.each(itemArray, function(item, next){
-				var tempCoords = coords.getCoords();
+				var tempCoords = _this.coords.getCoords();
 				var newItem = new mongoSetup.products({
-						id: item.ASIN[0],
-						category_id: self.noBrowseNodeID(item),
-						category: self.noBrowseNodeName(item),
-						title: self.noTitle(item),
-						description: self.noDescription(item),
-						image_link: self.noMediumImage(item),
+						/*ASIN are re-used from Amazon in each locale-zone; to prevent
+						duplicates, the countryCode is prefixed to the ASIN-id*/
+						id: _this.apiCode+"-"+item.ASIN[0],
+						category_id: _this.noBrowseNodeID(item),
+						category: _this.noBrowseNodeName(item),
+						title: _this.noTitle(item),
+						description: _this.noDescription(item),
+						image_link: _this.noMediumImage(item),
 						//imageSets, 
 						imageSet: {
-							SwatchImage: self.noImageSet_XS(item),
-							SmallImage: self.noImageSet_S(item),
-							ThumbnailImage: self.noImageSet_Th(item),
-							TinyImage: self.noImageSet_T(item),
-							MediumImage: self.noImageSet_M(item),
-							LargeImage: self.noImageSet_L(item),
-							HiResImage: self.noImageSet_XL(item)
+							SwatchImage: _this.noImageSet_XS(item),
+							SmallImage: _this.noImageSet_S(item),
+							ThumbnailImage: _this.noImageSet_Th(item),
+							TinyImage: _this.noImageSet_T(item),
+							MediumImage: _this.noImageSet_M(item),
+							LargeImage: _this.noImageSet_L(item),
+							HiResImage: _this.noImageSet_XL(item)
 						},
 						//brand = manufacturere field from Amazon
-						brand: self.noManufacturer(item),
-						price: self.noPrice(item),
+						brand: _this.noManufacturer(item),
+						price: _this.noPrice(item),
 						x: tempCoords[0],
 						y: tempCoords[1]
 						});
@@ -64,8 +78,8 @@ QueryHandler.prototype.saveData = function(results){
 						}
 						});
 				var newCat = new mongoSetup.product_categorys({
-						category_id: self.noBrowseNodeID(item),
-						name: self.noBrowseNodeName(item)
+						category_id: _this.noBrowseNodeID(item),
+						name: _this.noBrowseNodeName(item)
 						});
 						newCat.save(function(err){
 							if(err == null) logger.log('info', "Null-Error in mongoose save function (category)");
@@ -120,8 +134,9 @@ QueryHandler.prototype.runQueries = function(){
 }
 //make a request and resolve the result
 QueryHandler.prototype.makeRequest = function(query){
+	var _this = this;
 	return new Promise(function(resolve, reject){
-		opHelper.execute('ItemSearch', query, function(err, results){
+		_this.opHelper.execute('ItemSearch', query, function(err, results){
 			if(err) return reject(err)
 			else resolve(results)
 			});
@@ -130,12 +145,23 @@ QueryHandler.prototype.makeRequest = function(query){
 //change querystate of request in MongoDB after sending request to Amazon========
 QueryHandler.prototype.changeQryState = function(queryInfo){
  var query = {query_id: queryInfo.query_id };
- queryDB.queries.findOneAndUpdate(query, {$set: {queryState: true}},{new: true},function(err, doc){
+ if(this.apiCode == 'DE'){
+ queryDB.queries_DE.findOneAndUpdate(query, {$set: {queryState: true}},{new: true},function(err, doc){
 		if(err){logger.log('error', err);
 			return;}
 		else {logger.log('debug', "Query executed, new state saved to MongoDB!");
 			return;}
 	});
+ 	}
+ else if (this.apiCode == 'US'){
+ queryDB.queries_US.findOneAndUpdate(query, {$set: {queryState: true}},{new: true},function(err, doc){
+		if(err){logger.log('error', err);
+			return;}
+		else {logger.log('debug', "Query executed, new state saved to MongoDB!");
+			return;}
+	});
+ 	}
+ else {logger.log('error', "No apiCode in qryHandler class provided!"); return;}
 }
 
 //error handling=================================================================

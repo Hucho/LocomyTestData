@@ -3,58 +3,74 @@
 //require necessary modules=====================================
 //require logger
 var logger = require('./logger');
-//require async
-var async = require('async');
 //require db connection + mongoose mode for queries
 var queryDB = require('./queryDB');
-//requrire the query factory class
-var queryFactory = require('../app/qrybuilder');
-//create a new instance of the queryFactory class
-//var QueryBuilder = new queryFactory(require('./searchParams_EN.json'));
 //class constructor
-function QueryMongo(params){
-	this.collection = params.collection;
-	this.queryBuilder = new queryFactory(params.json);
+function QueryMongo(apiCode){
+	this.apiCode = apiCode;
+	function getCollection(){
+		if(_this.apiCode == 'DE') return 'queries_DE';
+		else if(_this.apiCode == 'US') return 'queries_US';
+		else {logger.log('debug', "Wrong ApiCode!"); return;}
+	}
+	var _this = this;
+	this.collection = getCollection();
+
 }
-/////////////////////////////////seprate write and save module
-QueryMongo.prototype.queriesToMongoDB = function (){
-//execute query building method of queryFactory class
-	var queries = queryBuilder.multiReqByTitle();
-	async.each(queries, function(query, next){
-		var newQuery = new queryDB.this.collection({
-			SearchIndex: query.SearchIndex,
-			Title: query.Title,
-			MinimumPrice: query.MinimumPrice,
-			MaximumPrice: query.MaximumPrice,
-			Keywords: query.Keywords,
-			ResponseGroup: query.ResponseGroup,
-			sort: query.sort,		
-			queryState: false,
-			query_id: queries.indexOf(query)
-			});
-		newQuery.save(function(err){
-			if(err) logger.log('debug', err);
-			else {logger.log('debug', newQuery.Title);
-			next();}
+//create query based on apiCode
+QueryMongo.prototype.getQuery = function(){
+	if (this.apiCode == 'DE'){
+		var query = queryDB.queries_DE.find({'queryState': false});
+		return query;
+	}
+	else if(this.apiCode == 'US'){
+		var query = queryDB.queries_US.find({'queryState': false});
+		return query;
+	}
+	else{logger.log('debug', 'Could not get query!'); return;}
+}
+/*callback for getQueries method, which takes the queries from MongoDB,
+fires them to the Amazon Server and stores them in the locomy MongoDB*/
+QueryMongo.prototype.callback = function (doc){
+	var tempArray = doc;
+	console.log(tempArray.length +" queries fetched from MongoDB");
+	var queryArray = [];
+	var queryInfoArray = [];
+	tempArray.map(function(query){
+		queryArray.push({
+		'SearchIndex': query.SearchIndex,
+		'Title': query.Title,
+		'MinimumPrice': query.MinimumPrice,
+		'MaximumPrice': query.MaximumPrice,
+		'Keywords': query.Keywords,
+		'ResponseGroup': query.ResponseGroup,
+		'sort': query.sort
 		});
-	}, function(){
-		logger.log('debug', "All queries stored in MongoDB");
-		return;
+		queryInfoArray.push({
+		'query_id': query.query_id
+		});
 	});
+	//require QueryHandler class
+	var QueryHandler = require('../app/qryHandler');
+	var queryRun = new QueryHandler(queryArray, queryInfoArray, this.apiCode);
+	queryRun.runQueries();
 }
-//getQueries back from MongoDB for requesting Amazon server
-	QueryMongo.prototype.getQueries = function(callback){
-		queryDB.this.collection.find({'queryState': false}, function(err, doc){
+//getQueries back from MongoDB and request Amazon server
+	QueryMongo.prototype.getAmzData = function(){
+		var _this = this;
+		var query = this.getQuery();
+		query.exec(function(err, doc){
 			if(err){console.log(err);
 				return;
 			}
 			else {
-				callback(doc);
+				_this.callback(doc);
 				console.log("getQueries returned!");
 				return;
 			}
 		});
 	}
+
 //export class
 module.exports = QueryMongo;
 //export mongoose model for queriesDB

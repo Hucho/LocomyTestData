@@ -407,25 +407,25 @@
   {
     "SearchIndex": "HealthPersonalCare",
     "Title": [
-      "HealthPersonalCare"
+      "Baby","Kinder","Baden","Körper","Pflege","Hygiene","Intimpflege","Erotik","Haarpflege","Styling","Haushalt","Hautpflege","Kontaktlinsen","Brille","Medizin","Hilfe","Männer","Frauen"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 5000
   },
   {
     "SearchIndex": "Classical",
     "Title": [
-      "Classical"
+      "Klassik","Audio-CD","Vinyl","Musikkasette","Super-Audio-CD","CD-Single","DVD-Audio","Ballet","Tanz","Chormusik","Kammermusik","Kinder","Konzert","Sinfonie","Orchester","Solo","Oper","Operette","Lied","Karajan","London","Wiener","Berliner","Royal","Bernstein","Callay","Bach","Mozart","Beethoven","Brahms","Schubert","Peter","Verdi","Modest","Dmitrij","Grieg","Chopin"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 5000
   },
   {
     "SearchIndex": "Software",
     "Title": [
-      "Software"
+      "Software", "Office", "Büro", "Tuning", "Betriebssystem", "Antivirus", "Grafik", "Bildebearbeitung", "Steuer", "Finanzen", "Videobearbeitung", "Videoschnitt", "Musik", "Audio", "Kinder", "Lernen", "Sprachen", "Reisen", "Brennen", "Rippen", "OEM"
     ],
     "Keywords": "",
     "MinimumPrice": 500,

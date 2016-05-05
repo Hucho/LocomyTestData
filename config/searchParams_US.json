@@ -11,7 +11,7 @@
   {
     "SearchIndex": "Wine",
     "Title": [
-      "Wine"
+      "Wine","Bordeaux","Mouton","Red","White","Champaign"
     ],
     "Keywords": "",
     "MinimumPrice": 500,

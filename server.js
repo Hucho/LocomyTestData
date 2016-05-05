@@ -11,39 +11,18 @@ var logger = require('./config/logger');
 because it can only be once compiled*/
 var mongoSetup = require('./app/qryHandler').mongoSetup;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
-//require QueryHandler class
-var QueryHandler = require('./app/qryHandler');
-//require mongo query class to get queries from MongoDB
-var mongoquery = require('./config/queryMongo');
-//instantiate queryMongo class 
-var QueryMongo = new mongoquery;
-//write queries to MongoDB
-//QueryMongo.queriesToMongoDB();
 
-function array (doc){
-	var tempArray = doc;
-	console.log(tempArray.length +" queries fetched from MongoDB");
-	var queryArray = [];
-	var queryInfoArray = [];
-	tempArray.map(function(query){
-		queryArray.push({
-		'SearchIndex': query.SearchIndex,
-		'Title': query.Title,
-		'MinimumPrice': query.MinimumPrice,
-		'MaximumPrice': query.MaximumPrice,
-		'Keywords': query.Keywords,
-		'ResponseGroup': query.ResponseGroup,
-		'sort': query.sort
-		});
-		queryInfoArray.push({
-		'query_id': query.query_id
-		});
-	});
-	var queryRun1 = new QueryHandler(queryArray, queryInfoArray);
-	queryRun1.runQueries();
-}
-//START APP AND RUN ALL QUERIES
-//QueryMongo.getQueries(array);
+/*Generate new queries in MongoDB. Change parameter between "US" or "DE" for generating
+us- or german queries*/
+var writeMongo = require('./config/writeMongo');
+var MongoWriter = new writeMongo('DE');
+//MongoWriter.qrysToMongo();
+
+//START APP AND RUN ALL QUERIES; provide countyCode for specific country! (Either 'DE' or 'US')
+var queryMongo = require('./config/queryMongo');
+var productData = new queryMongo('DE');
+productData.getAmzData();
+
 
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data
@@ -79,8 +58,7 @@ function badRequest(){
 				}).catch((err) => {
 					console.log(err);
 						})	
-		})
-}
+		})}
 badRequest();
 //parse application/json
 app.use(bodyParser.json());
