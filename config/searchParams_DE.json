@@ -2,16 +2,16 @@
   {
     "SearchIndex": "All",
     "Title": [
-      ""
+      
     ],
-    "Keywords": "Men",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "Keywords": "USB",
+    "MinimumPrice": "",
+    "MaximumPrice": ""
   },
   {
     "SearchIndex": "Beauty",
     "Title": [
-      "Beauty"
+      "Beauty","Anti-Age","Age","Falten","Augen","Haut","Hautpflege","Männer","Frauen","Intim","Gel","Spray","Lippen","Lip","Mund","Po","Beine","Bauch","Creme","Öl","Massage","Maske","Pealing","Wachs","Haare","Enthaarung","Rasierer","Pflege","Nägel","Füße","Hände","Lidschatten","Gloss","Lippenstift","Mascara","Eyeliner","Make-up","Wimpern"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -20,7 +20,7 @@
   {
     "SearchIndex": "Grocery",
     "Title": [
-      "Grocery"
+      "Getränk","Bio","Saft","Obst","Gemüse","Honig","Marmelade","Brotaufstrich","Likör","Brand","Demeter","Unser Land","Kaffee"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -29,7 +29,7 @@
   {
     "SearchIndex": "Industrial",
     "Title": [
-      "Industrial"
+      "Druck","Luft","Temperatur","Wind","Leitfähigkeit","Volt","Ampère","Gewicht","Waage","Industrie","Professionell","Heizung","Beleuchtung","Helm","Schutz","Kran","Universum","Sterne","Erde","Planet","Globus","Plasma","Mikroskop","Lupe","Elektronisch","Computer"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -38,16 +38,16 @@
   {
     "SearchIndex": "PetSupplies",
     "Title": [
-      "PetSupplies"
+      "Haustier","Katze","Hund","Kaninchen","Meerschweinchen","Wellensittich","Maus","Ratte","Hamster","Schlange","Agame","Hase","Wüstenrennmaus","Chamäleon","Vogel","Papagei","Zwergkaninchen","Futter","Stange","Käfig","Terrarium","Fisch","Fischfutter","Aquarium","Lampe","Korb","Transport","Würmer","Spiel","Welpe","Leine","Wasser","Medizin","Arzt","Box","Haare","Bürste","Geruch","Kau","Beiß","Spielzeug","Nagen","Laufrad","Stroh","Gras","Heu","Einstreu","Haus","Häuschen","Gitter"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "OfficeProducts",
     "Title": [
-      "OfficeProducts"
+      "Office","Büro","Papier","Stift","Lineal","Unterlage","USB","Ordner","Ablage","Schreibtisch","Microsoft","Excel","Word","Powerpoint","Access","Lampe","Stuhl","Drucker","Scanner","Zettel","Kugelschreiber","Stabilo","Bleistift","Marker","Edding","Wasserfest","CD","DVD","Rohling","Hülle","Folie","Aufkleber","Maus","Mauspad","Geodreieck","Schere","Kleber","Uhu","Locher","Tacker","Schnellhefert","Büroklammer","A4","A3","A2","A1","A0","Format","Patrone"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -56,16 +56,16 @@
   {
     "SearchIndex": "Electronics",
     "Title": [
-      "Electronics"
+      "Elektronik","Audio","DVD","CD","Blu-Ray","Blue-Ray","MP3","USB","Bluetooth","HDMI","DVI","Display Port","Digital","Touchscreen","TV","Smart-TV","Navi","Navigation","Verstärker","Box","Lautsprecher","Radio","DAB","T+A","Sonoro","Sony","Panasonic","LG","Apple","Watch","Smart-Watch","Samsung","Lenovo","HP","Brother","Dell","Epson","Bang & Olufsen","Wifi","W-Lan","Netzwerk","Nikon","Canon"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 1000,
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "Magazines",
     "Title": [
-      "Magazines"
+      "Magazin","kochen","reisen","heimat","berge","motorrad","auto","oldtimer","porsche","geo","reitsport","computer","pc","mac","ipad","iphone","tv","fernsehen","erotik","rätsel","sudoku","architektur","wohnen","garten","gesundheit","fitness","yoga"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -74,25 +74,25 @@
   {
     "SearchIndex": "Watches",
     "Title": [
-      "Watches"
+      "Uhr","mechanisch","digital","analog","Armband","Taschen","Mond","stop","sekunde","millisekunde","stunde","tag","casio","g-shock","batterie","tag heuer","swatch","smart","fitness","kinder","flick-flack","kuckuck","wand","stand","rolex","omega","hublot","breitling","pathek","eterna","leder","stahl","gold","silber","platin","weissgold","titan","wasserdicht","luftdruck","segeln","tauchen"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": "",
+    "MaximumPrice": ""
   },
   {
     "SearchIndex": "Jewelry",
     "Title": [
-      "Jewelry"
+      "Schmuck","Modeschmuck","Gold","Silber","Platin","Diamand","Saphir","Rubin","Opal","Smaragd","Aquamarin","Kette","Ring","Heirat","Halskette","Halsband","Armband","Perlen","Fuß","Kupfer","Ehering","Verlobungsring","Sigelring","Piercing","Ohrring","Nasenring","Intim","Swarowski","Glas","Perlmutt","Stein","Jade","Knochen","Mammut","Holz"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 2500,
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "Luggage",
     "Title": [
-      "Luggage"
+      "Rucksack","Tasche","Koffer","Handgepäck","Trolly","Rimova","Samsonite","Hally Burton","Eastpack","Northface","Jack Wolfskin","Mammut","Burton","Adidas","Puma","Nike","Reebock","Porsche","Audi"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -101,34 +101,34 @@
   {
     "SearchIndex": "MobileApps",
     "Title": [
-      "MobileApps"
+      "Mobil","App","Finanzen","Reisen","Office","Spiel","Sprache","Spanisch","Englisch","Französich","Italienisch","Wetter"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 100,
+    "MaximumPrice": 1000
   },
   {
     "SearchIndex": "Photo",
     "Title": [
-      "Photo"
+      "Photo","Kamera","SD-Karte","SD","Speicherkarte","Blitz","GPS","Auslöser","Spiegelreflex","Nikon","Canon","Bridge","Objektiv","Tele","Makro","Tasche","Schutz","Tuch","Akku","Batterie","Ladegerät","Sony","Hasselblatt","Panasonic","Apple","ipad","Stativ","Reise","Manuell","Auto","Focus","Zeiss","Leica","Spektiv","Licht","Belichtung","Film","Polaroid","Drucker","Papier","Trage","Gurt","Lithium-Ionen","HP","Brother","Epson","Poster","GB","MB","Digital","Analog","Profi","G-Shot","Kompakt"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "Shoes",
     "Title": [
-      "Shoes"
+      "Sport","Tanz","Haus","Winter","Sommer","Gummi","Regen","Goretex","Atmungsaktiv","Schutz","Ballarina","Flip-Flop","Sneakers","High Heels","Stöckelschuhe","Buffalo","Birkenstock","Sandalen","Budapester","Herren","Damen","Kinder","Berg","Ball","Haferl","Loden"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 1000,
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "KindleStore",
     "Title": [
-      "KindleStore"
+      "Kindle","Roman","Thriller","Mann","Frau","Liebe","Krimi","Bestseller"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -137,11 +137,11 @@
   {
     "SearchIndex": "Automotive",
     "Title": [
-      "Automotive"
+      "Auto","KFZ","Motorrad","Pflege","Politur","Schwamm","Leder","Reinigung","Glanz","Navi","TomTom","USB","Ski","Fahrrad","Dachgepäck","Anhänger","Reifen","Felge","Kofferraum","Lenkrad","Audio","Licht","Spray"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 50000
   },
   {
     "SearchIndex": "Pantry",
@@ -155,11 +155,11 @@
   {
     "SearchIndex": "MusicalInstruments",
     "Title": [
-      "MusicalInstruments"
+      "Mischpult","Kopfhörer","Table","Turn","DJ","Digital","Analog","Guitarre","Klavier","Trompete","Klarinette","Geige","Cello","Violine","Kontrabass","Harfe","Flöte","Querflöte","Triangel","Schlagzeug","Ukulele","Klassische Guitarre","E-Guitarre","Verstärker","Kabel","Lautsprecher","Takt","Piano","Flügel","Keyboard","Muntamonika","Akordeon","Violine","Bratsche","Kinder","Männer","Frauen","Posaune","Gong","Alphorn","Horn","Bläser","Streicher","Noten","Notenhalter"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 5000,
+    "MaximumPrice": 250000
   },
   {
     "SearchIndex": "OutdoorLiving",
@@ -173,7 +173,7 @@
   {
     "SearchIndex": "GiftCards",
     "Title": [
-      "GiftCards"
+      "Geschenk","Gutschein","Erlebnis","10 €","20 €","30 €","40 €","50 €","My days","Jochen","itunes","Amazon","Disney","Lego"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -182,25 +182,25 @@
   {
     "SearchIndex": "Toys",
     "Title": [
-      "Toys"
+      "Lego","Duplo","Lego Technik","Merklin","Eisenbahn","Bahn","Fischer","Bosch","Stihl","Holz","Car","RC","Schiff","Auto","Spiel","Set","Siedler","Risiko","Fang","Rutsche"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": "",
+    "MaximumPrice": ""
   },
   {
     "SearchIndex": "SportingGoods",
     "Title": [
-      "SportingGoods"
+      "Sport","Golf","Tennis","Squash","Fitness","Yoga","Training","Fußball","Handball","Basketball","Leichtatlethik","Laufen","Walken","Bergsteigen","Klettern","Surfen","Volleyball","Beach volleyball","Tischtennis","Minigolf","Billard","Snooker","Schwimmen","Marathon","Trinken","Brotzeit","Adidas","Nike","Puma","Reebock","Wilson","Titleist","Biken","Fahrrad","Mountain Bike","Rennrad","Carbon","Smart watch","Pulsmesser","Stöcke","Flasche","Sonne","Helm","Reiten","Polo","Hockey", "Icehockey","Biathlon","Langlaufen","Ski","Snowboard","Mono","Schlitten","Bob","Schlittschuh","Inline Skates","Skateboard","Snakeboard","Longboard","BMX","Tandem","Kindersitz","Ballon","Ball","Sand"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 2500,
+    "MaximumPrice": 25000
   },
   {
     "SearchIndex": "PCHardware",
     "Title": [
-      "PCHardware"
+      "PC","Hardware","Festplatte","Bildschirm","RAM","Arbeitsspeicher","2 GB","4 GB","6 GB","8 GB","16 GB","32 GB","64 GB","128 GB","256 GB","512 GB","1024 GB","2056 GB","Maus","USB","Bluetooth","Wlan","Router","Wifi","Netzwerk","Netzwerkkarte","Netzwerkkabel","Netzwerk","Motherboard","SCSI","ATI","Radon","Nvidia","Plextor","Maxtor","Dell","IBM","Intel","Prozessor","GHZ","Xeon","Workstation","Blue-Ray","Pixel","SSD","Flash","SD","Drive","Lenovo","Macbook","Macbook Pro","Tablet","ipad","surface","touch","Samsung","LG","Core","CPU","GPU","Kühler","Gehäuse","Netzteil","Kabel","DVI","HDMI","Display Port","Port","Display","USB 3.0","Bolt","VGA","Audio","Karte","Video","Videoschnitt"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -209,11 +209,11 @@
   {
     "SearchIndex": "Lighting",
     "Title": [
-      "Lighting"
+      "LED","Lampe","Schreibtisch","Esstisch","Wohnzimmer","Kinderzimmer","Büro","Garten","Garage","Balkon","Keller","Bad","Halogen","Spot","Strahler","Bühne","Stehlampe","Hängelampe","Ambient","Leuchtmittel","Glühbirne"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "Outlet",
@@ -227,7 +227,7 @@
   {
     "SearchIndex": "Books",
     "Title": [
-      "Books"
+      "Buch","Kochen","Backen","Reisen","Erotik","Sprachen","China","Spanien","Irak","Iran","Persien","Australien","Neuseeland","Madagaskar","Seychellen","Fitschi","Canaren","Österreich","Deutschland","Bayern","Sylt","BMW","Porsche","Audi","Mercedes","Harry Potter","Krimi","Liebe","Tod","Hass","Freude","Sudan","Schweiz","Garten","Orchideen","Fischen","Angeln","Surfen","Latein","Griechisch","Antike","Mythos","Sekte","Religion","Kaiser","König","Biographie","USA","Brasilien","Canada","Alaska","Yukon","Bär","Wolf","Pferd","Hund","Adler"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -236,34 +236,34 @@
   {
     "SearchIndex": "VHS",
     "Title": [
-      "VHS"
+      ""
     ],
-    "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "Keywords": "vhs",
+    "MinimumPrice": "",
+    "MaximumPrice": ""
   },
   {
     "SearchIndex": "MP3Downloads",
     "Title": [
-      "MP3Downloads"
+      "Gun","Rose","Black","Metal","Funk","Punk","R&B","Soul","Jazz","Country","Swift","Rhianna","Madonna","2pack","Jay-z","Jackson","Bob Marley","Jamaica","Kuschel","Rock","Adele","Cyrus","Foster","Boss","Unheilig","Xavier"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 2500
   },
   {
     "SearchIndex": "Tools",
     "Title": [
-      "Tools"
+      "Tool","Hilti","Festool","Dewalt","Bosch","Kärcher","John Deer","Akku Schrauber","Kreissäge","Stichsäge","Bohrer","Bohrhammer","Torx","Imbus","Schraubendreher","Ratsche","Hammer","Schlüssel","Bohrfutter","Sägeblatt","Kette","Motorsäge","Rasenmäher","zerkleinern","polieren","schleifen","schneiden","Schere","Zange","Schraubstock","Werkbank","Klemme","Wasserwaage","Zollstock","Laser","Hobel","Schweißen","Dübel","Anker"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 900,
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "Baby",
     "Title": [
-      "Baby"
+      "Baby","Pampers","Pflege","Nase","Augen","Mund","Zähne","Nahrung","Brei","Latz","Schuhe","Hose","Jacke","Body","Bett","Stuhl","Kraxe","Öl","Windel","Eimer","Unterlage","Tuch","Mütze","Handschuhe","Regen","Schnee","Sonne","Wind","Bürste","Kamm","Junge","Mädchen","Kommode","Trinken","Essen"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -272,7 +272,7 @@
   {
     "SearchIndex": "HomeGarden",
     "Title": [
-      "HomeGarden"
+      "Garten","Dünger","Topf","Rasen","Rasenmäher","Rollrasen","Gartenkralle","Schere","Ast","Säge","Teich","Pumpe","Lampe","LED","Pflaster","Stein","Säule","Zaun","Teak","Schirm","Kies","Unkraut","Herbizid","Fungizid","Laub","Blätter","Motorsäge","Zerkleinern","Holz","Gartenhaus","Laube","Überdachung","Markise","Beet","Salat","Schecken","Läuse","Nistkasten","Vogel","Futter","Teichrose","Strauch","Hecke","Baum","Spaten","Schaufel","Pickel","Hammer","Regen","Sonne","Erde","Rose","Obst","Gemüse","Gewächshaus","Folie"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -290,16 +290,16 @@
   {
     "SearchIndex": "UnboxVideo",
     "Title": [
-      "UnboxVideo"
+      "Leonardo DiCaprio","Stallone","Schwarzenegger","Cameron Diaz","Ozon","Brad Pitt","Sean Connery","David Craig","Salma Hayek","Antonio Banderas","Vampir","Dracula","Dokumentation","Wasser","Feuer","Eis","Mendez"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 5000
   },
   {
     "SearchIndex": "VideoGames",
     "Title": [
-      "VideoGames"
+      "Game","Counter Strike","Age of Empires","Zelda","World of WarCraft","Mario","Hitman","Gun","War","Tank","Chicken","Run","Car","Fast","Theft","Star Wars","Strategie","Action","Jump","Run","Schiff","Ships","Conquer","Discover","Eroberung","Entdecke","Ziele","Waffen","Diabolo","Vampir","Cart","Air","Flugzeug","Simulator","Flug","Fall","I","II","III","IV","V","VI","VII","VIII"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -308,7 +308,7 @@
   {
     "SearchIndex": "ForeignBooks",
     "Title": [
-      "ForeignBooks"
+      "Harry Potter","Lord of the Ring","Economics","Finance","Religion","China","Russia","USA","Brazil","Italian","World War","War","Egypt","Pyramids","Cooking","Baking","Cake","Car","Space","Victory","Great Britain","Scotland","Ireland","France","Spain"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -317,7 +317,7 @@
   {
     "SearchIndex": "Apparel",
     "Title": [
-      "Apparel"
+      "Kleidung","T-Shirt","Pullover","Cashmere","Hose","Jeans","Hoody","Leggins","Bluse","Hemd","Rock","Mini-Rock","bauchfrei","Top","BH","Gürtel","Socken","Strümpfe","Wolle","Polyester","Stretch","Jacke","Mantel","Weste","Regen","Wind","Shell","Fleece","Loden","Kleid","Unterhose","Unterhemd","Boxershorts","Shorts","Badehose","Badeshorts","Bikini","Badeanzug","Handtuch","Bett","chill","Training","Sport","Boss","Jack","Patagonia","For you","Denim","Lee","Levis"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -326,52 +326,43 @@
   {
     "SearchIndex": "Marketplace",
     "Title": [
-      "Marketplace"
+      ""
     ],
-    "Keywords": "",
+    "Keywords": "usb",
     "MinimumPrice": 500,
     "MaximumPrice": 10000
   },
   {
     "SearchIndex": "DVD",
     "Title": [
-      "DVD"
+      "DVD","Blue-Ray","Ski","Wasser","Eis","Liebe","Tod","tot","lebendig","Hoffnung","Herr der Ringe","Hobbit","Bruder","Schwester","Sohn","Tochter","Vater","Mutter","Haus","Berg","Tiefe","Erde","Space","Blau","Wildnis","Trip","Verloren","Vergessen","Sibirien","Island","Altlantik","Pazifik","Kochen","Surfen","Kite surfen","Auto","Fast","Bike","Flug","Jurassic"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
-    "MaximumPrice": 10000
-  },
-  {
-    "SearchIndex": "HomeImprovement",
-    "Title": [
-      "HomeImprovement"
-    ],
-    "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MaximumPrice": 2500
   },
   {
     "SearchIndex": "Appliances",
     "Title": [
-      "Appliances"
+      "Kühlschrank","Herd","Ofen","Gefriertruhe","Kaffeemaschine","Maschine","Milch","Rühren","Dampfgarer","Schneidemaschine","Kühl-Gefrier-Kombination","Miele","Gaggenau","Bosch","AEG","Siemens","Kitchen Aid","Jupiter","Entsalzer","Osmose"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 5000,
+    "MaximumPrice": 100000
   },
   {
     "SearchIndex": "Kitchen",
     "Title": [
-      "Kitchen"
+      "Besteck","Gläser","Pfanne","Topf","Blech","Garen","Mikrowelle","Mixer","Presse","Orange","Eismaschine","Tupper","Herd","Induktion","Gas","Messer","Gabel","Brot","Reiskocher","Teller","Tassen","Wein","Öffner","Kanne","Schüssel","Maschine","Schneiden","Schere","Dampf","Reinigen","Säubern","Entkalken","Bürste","Schwamm","Reiniger","Spray","Schaum","Brett","Reibe","zerkleinern","Rezept","Ei","Fleisch","Schublade","Ablage","Bambus","Sushi","Spieß","Dring","Eis","Box","Nudeln","Wok","Form","Kuchen","Parline","Backen","Blanchieren","Braten","Erhitzen","Einfrieren","Tüte","Gummi","Servieren","Warm halten","Wärmen","Handschuh","Schutz"
     ],
     "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "MinimumPrice": 1000,
+    "MaximumPrice": 50000
   },
   {
     "SearchIndex": "Music",
     "Title": [
-      "Music"
+      "Schallplatte","Beatles","Rolling Stones","Nirvana","Tina Turner","Michael Jackson","Blondie","ACDC","Metal","Rock","Punk","Purple","Poor","Rich","Love","Rain","Unplugged","Live","Solo","Tour","Santana","Lion"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
@@ -380,34 +371,25 @@
   {
     "SearchIndex": "SoftwareVideoGames",
     "Title": [
-      "SoftwareVideoGames"
+      ""
     ],
-    "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
-  },
-  {
-    "SearchIndex": "Video",
-    "Title": [
-      "Video"
-    ],
-    "Keywords": "",
+    "Keywords": "game",
     "MinimumPrice": 500,
     "MaximumPrice": 10000
   },
   {
     "SearchIndex": "Blended",
     "Title": [
-      "Blended"
+      ""
     ],
-    "Keywords": "",
-    "MinimumPrice": 500,
-    "MaximumPrice": 10000
+    "Keywords": "Wood",
+    "MinimumPrice": "",
+    "MaximumPrice": ""
   },
   {
     "SearchIndex": "HealthPersonalCare",
     "Title": [
-      "Baby","Kinder","Baden","Körper","Pflege","Hygiene","Intimpflege","Erotik","Haarpflege","Styling","Haushalt","Hautpflege","Kontaktlinsen","Brille","Medizin","Hilfe","Männer","Frauen"
+      "Baby","Kinder","Baden","Körper","Pflege","Hygiene","Intimpflege","Erotik","Haarpflege","Styling","Haushalt","Hautpflege","Kontaktlinsen","Brille","Medizin","Hilfe","Männer","Frauen","Sonne"
     ],
     "Keywords": "",
     "MinimumPrice": 500,
