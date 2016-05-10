@@ -1,7 +1,8 @@
 //app/qrybuilder.js
 //constructor
-function queryArray(json){
+function queryArray(json, priceStep){
 	this.json = json;
+	this.priceStep = priceStep;
 }
 //init qry template with default values
 queryArray.prototype.qryInit = function() {
@@ -38,7 +39,7 @@ queryArray.prototype.qryInit = function() {
 	var Array2 = (this.qryTempArray(this.json));
 	var miniArray =[];
 	//set number in Euro/Dollar cents to set the increment between two queries
-	for(n = Array2[i].MinimumPrice; n < Array2[i].MaximumPrice; n+=250){
+	for(n = Array2[i].MinimumPrice; n < Array2[i].MaximumPrice; n+=this.priceStep){
 			miniArray.push(n);
 		}
 	return miniArray;
@@ -69,7 +70,7 @@ queryArray.prototype.qryInit = function() {
 					'Title': qryTempArray1[i].Title,
 					'MinimumPrice': JSON.stringify(priceArray1[i].pricesMin[z]),
 					//set number in Euro/Dollar cents to set the increment between two queries
-					'MaximumPrice': JSON.stringify(priceArray1[i].pricesMin[z]+250),
+					'MaximumPrice': JSON.stringify(priceArray1[i].pricesMin[z]+this.priceStep),
 					'Keywords': qryTempArray1[i].Keywords,
 					'ResponseGroup': qryTempArray1[i].ResponseGroup,
 					'sort': qryTempArray1[i].sort

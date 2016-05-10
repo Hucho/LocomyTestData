@@ -25,7 +25,7 @@ function WriteMongo(apiCode){
 		else {logger.log('debug', "Wrong ApiCode!"); return;}
 	}
 	var _this = this;
-	this.queryBuilder = new queryFactory(getJson());
+	this.queryBuilder = new queryFactory(getJson(), 500);
 	this.collection = getCollection();
 }
 WriteMongo.prototype.qrysToMongo = function (){
@@ -61,6 +61,7 @@ WriteMongo.prototype.qrysToMongo = function (){
 			ResponseGroup: query.ResponseGroup,
 			sort: query.sort,		
 			queryState: false,
+			fetchedItems: 0,
 			query_id: queries.indexOf(query)
 			});
 			break;
@@ -74,6 +75,7 @@ WriteMongo.prototype.qrysToMongo = function (){
 			ResponseGroup: query.ResponseGroup,
 			sort: query.sort,		
 			queryState: false,
+			fetchedItems: 0,
 			query_id: queries.indexOf(query)
 			});
 			break;

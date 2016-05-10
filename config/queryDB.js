@@ -19,6 +19,7 @@ var query_US = new Schema ({
 	ResponseGroup: String,
 	sort: String,
 	queryState: Boolean,
+	fetchedItems: Number,
 	query_id: Number
 	}, {collection: 'queries_US'});
 
@@ -32,6 +33,7 @@ var query_DE = new Schema ({
 	ResponseGroup: String,
 	sort: String,
 	queryState: Boolean,
+	fetchedItems: Number,
 	query_id: Number
 	}, {collection: 'queries_DE'});
 

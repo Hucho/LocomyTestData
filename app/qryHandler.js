@@ -78,7 +78,7 @@ QueryHandler.prototype.saveData = function(results){
 						}
 						});
 				var newCat = new mongoSetup.product_categorys({
-						category_id: _this.noBrowseNodeID(item),
+						category_id: _this.apiCode+"-"+_this.noBrowseNodeID(item),
 						name: _this.noBrowseNodeName(item)
 						});
 						newCat.save(function(err){
