@@ -17,6 +17,7 @@ function QueryHandler(queryArray, queryInfoArray, apiCode){
 	this.queryArray = queryArray;
 	this.queryInfoArray = queryInfoArray;
 	this.apiCode = apiCode;
+	//this.initCode = initCode;
 	var _this = this;
 	function getCountryCoords(){
 		//require randomCoordinates module and input GeoJson file
@@ -49,7 +50,7 @@ QueryHandler.prototype.saveData = function(results){
 						/*ASIN are re-used from Amazon in each locale-zone; to prevent
 						duplicates, the countryCode is prefixed to the ASIN-id*/
 						id: _this.apiCode+"-"+item.ASIN[0],
-						category_id: _this.noBrowseNodeID(item),
+						category_id: _this.apiCode+"-"+_this.noBrowseNodeID(item),
 						category: _this.noBrowseNodeName(item),
 						title: _this.noTitle(item),
 						description: _this.noDescription(item),

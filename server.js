@@ -12,17 +12,17 @@ because it can only be once compiled*/
 var mongoSetup = require('./app/qryHandler').mongoSetup;
 /*run Queries against Amazon API and save results to MongoDB===========================*/
 
-/*Generate new queries in MongoDB. Change parameter between "US" or "DE" for generating
-us- or german queries*/
-var writeMongo = require('./config/writeMongo');
-var MongoWriter = new writeMongo('DE');
-//MongoWriter.qrysToMongo();
-
-//START APP AND RUN ALL QUERIES; provide countyCode for specific country! (Either 'DE' or 'US')
-var queryMongo = require('./config/queryMongo');
-var productData = new queryMongo('DE');
-productData.getAmzData();
-
+/*This starts the complete app===========================================================
+The configuration works as follows:
+First paramter of task object: 0 = Continue querying without building new
+queries; 1 = delete all existing queries for DE and US API and generate
+new queries for both APIs.
+Second parameter of task obejct: 0 = Continue querying without deleting any product items
+or categrories; 1 = delete all product items and categories before starting fetch data
+from Amazon*/
+var Taskmanager = require('./app/taskmanager');
+var task = new Taskmanager(1,1);
+task.start();
 
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data

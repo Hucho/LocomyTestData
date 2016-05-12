@@ -25,7 +25,7 @@ function WriteMongo(apiCode){
 		else {logger.log('debug', "Wrong ApiCode!"); return;}
 	}
 	var _this = this;
-	this.queryBuilder = new queryFactory(getJson(), 500);
+	this.queryBuilder = new queryFactory(getJson(), 250);
 	this.collection = getCollection();
 }
 WriteMongo.prototype.qrysToMongo = function (){
@@ -49,35 +49,35 @@ WriteMongo.prototype.qrysToMongo = function (){
 }
 //execute query building method of queryFactory class
 	var queries = this.queryBuilder.multiReqByTitle();
-	async.each(queries, function(query, next){
+	async.eachSeries(queries, function(query, next){
 		switch (_this.collection){
 			case 'queries_DE':
-		var newQuery = new queryDB.queries_DE({
-			SearchIndex: query.SearchIndex,
-			Title: query.Title,
-			MinimumPrice: query.MinimumPrice,
-			MaximumPrice: query.MaximumPrice,
-			Keywords: query.Keywords,
-			ResponseGroup: query.ResponseGroup,
-			sort: query.sort,		
-			queryState: false,
-			fetchedItems: 0,
-			query_id: queries.indexOf(query)
-			});
+				var newQuery = new queryDB.queries_DE({
+					SearchIndex: query.SearchIndex,
+					Title: query.Title,
+					MinimumPrice: query.MinimumPrice,
+					MaximumPrice: query.MaximumPrice,
+					Keywords: query.Keywords,
+					ResponseGroup: query.ResponseGroup,
+					sort: query.sort,		
+					queryState: false,
+					fetchedItems: 0,
+					query_id: queries.indexOf(query)
+					});
 			break;
 			case 'queries_US':
-			var newQuery = new queryDB.queries_US({
-			SearchIndex: query.SearchIndex,
-			Title: query.Title,
-			MinimumPrice: query.MinimumPrice,
-			MaximumPrice: query.MaximumPrice,
-			Keywords: query.Keywords,
-			ResponseGroup: query.ResponseGroup,
-			sort: query.sort,		
-			queryState: false,
-			fetchedItems: 0,
-			query_id: queries.indexOf(query)
-			});
+				var newQuery = new queryDB.queries_US({
+					SearchIndex: query.SearchIndex,
+					Title: query.Title,
+					MinimumPrice: query.MinimumPrice,
+					MaximumPrice: query.MaximumPrice,
+					Keywords: query.Keywords,
+					ResponseGroup: query.ResponseGroup,
+					sort: query.sort,		
+					queryState: false,
+					fetchedItems: 0,
+					query_id: queries.indexOf(query)
+					});
 			break;
 		};
 		newQuery.save(function(err){
@@ -92,7 +92,6 @@ WriteMongo.prototype.qrysToMongo = function (){
 		return;
 	});
 }
-
 //export class
 module.exports = WriteMongo;
 //export mongoose model for queriesDB

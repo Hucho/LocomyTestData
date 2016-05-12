@@ -52,7 +52,11 @@ QueryMongo.prototype.callback = function (doc){
 	});
 	//require QueryHandler class
 	var QueryHandler = require('../app/qryHandler');
+	/*create new instance of Queryhandler class and pass the queryArray (the quries themselfes),
+	the queryInfoArray (contains the metadata of the query with id and querystate) and the 
+	Apicode into the constructor*/
 	var queryRun = new QueryHandler(queryArray, queryInfoArray, this.apiCode);
+	//Initiate requesting the Amazon server
 	queryRun.runQueries();
 }
 //getQueries back from MongoDB and request Amazon server
