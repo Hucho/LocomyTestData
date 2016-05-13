@@ -16,12 +16,11 @@ var queryMongo = require('../config/queryMongo');
 function TaskManager (initCodeQueries, initCodeitems){
 	this.initCodeQueries = initCodeQueries;
 	this.initCodeitems = initCodeitems;
-	var _this = this;
-
-	function init() {
-		if(_this.initCodeitems == 0){logger.log('debug', "Querying can be continued...");
+}
+TaskManager.prototype.init = function() {
+		if(this.initCodeitems == 0){logger.log('debug', "Querying can be continued...");
 			return;}
-			else if(_this.initCodeitems == 1){
+			else if(this.initCodeitems == 1){
 						mongoSetup.products.remove({}, function(err){
 							if(err) logger.log('error', err);
 							else logger.log('debug', "All products removed from MongoDB on start-up!");
@@ -34,41 +33,17 @@ function TaskManager (initCodeQueries, initCodeitems){
 			else {logger.log('debug', "No valid initCode entered!");
 				return;}	
 		}
-	init();
-}
-TaskManager.prototype.CreateQueries = function(){
+TaskManager.prototype.CreateQueries = function(apiCode){
 	if(this.initCodeQueries == 1){
-		async.eachSeries(['DE','US'], function(apiCode, callback){
-			logger.log('debug', "Generating queries for "+apiCode+" Amazon API!");
 			var MongoWriter = new writeMongo(apiCode);
-			MongoWriter.qrysToMongo();
-			callback();
-		}, function(err){
-			if(err) logger.log('error', err);
-			else logger.log('debug', 'All Queries successfully created!');
-		});
-	}
+			MongoWriter.qrysToMongo();}
 	else if(this.initCodeQueries = 0) logger.log('debug', 'Continue querying...');
 	else logger.log('error', 'No valid initCode for dealing with queries entered!');
 return;
 }
-TaskManager.prototype.RunQueries = function(){
-	async.eachSeries(['DE','US'], function(apiCode, callback){
-		logger.log('debug', 'Starting query session for'+apiCode+"-API");
+TaskManager.prototype.RunQueries = function(apiCode){
 		var productData = new queryMongo(apiCode);
 		productData.getAmzData();
-		callback();
-	}, function(err){
-			if(err) logger.log('error', err);
-			else logger.log('debug', "All queries successfully fired!");
-	});
 return;
-}
-TaskManager.prototype.start = function(){
-	var _this = this;
-	setTimeout(function(){
-		_this.CreateQueries();
-		_this.RunQueries();
-	}, 5000);
 }
 module.exports = TaskManager;

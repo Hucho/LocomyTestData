@@ -96,7 +96,8 @@ var product_shipping = new Schema ({
 
 var product_category = new Schema ({
 	id: Number,
-	category_id: Number,
+	//changed category_id to String
+	category_id: String,
 	name: String,
 	desciption: String }, {collection: 'product_category'});
 

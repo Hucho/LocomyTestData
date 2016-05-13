@@ -44,7 +44,7 @@ QueryHandler.prototype.saveData = function(results){
 			return;}
 		else{
 			var itemArray = results.ItemSearchResponse.Items[0].Item;
-			async.each(itemArray, function(item, next){
+			async.eachSeries(itemArray, function(item, next){
 				var tempCoords = _this.coords.getCoords();
 				var newItem = new mongoSetup.products({
 						/*ASIN are re-used from Amazon in each locale-zone; to prevent
@@ -72,8 +72,8 @@ QueryHandler.prototype.saveData = function(results){
 						y: tempCoords[1]
 						});
 						newItem.save(function(err){
-							if(err == null) logger.log('info', "Null-Error in mongoose save function (product)");
-							else if(err == 11000) logger.log('info', "Prodcut already in DB!");
+							if(err == null) logger.log('debug', "Null-Error in mongoose save function (product)");
+							else if(err == 11000) logger.log('debug', "Prodcut already in DB!");
 							else {logger.log('debug', newItem.title);
 							//next();
 						}
@@ -83,12 +83,12 @@ QueryHandler.prototype.saveData = function(results){
 						name: _this.noBrowseNodeName(item)
 						});
 						newCat.save(function(err){
-							if(err == null) logger.log('info', "Null-Error in mongoose save function (category)");
-							else if(err == 11000) logger.log('info', "Category already in DB!");
-							else {logger.log('debug', newCat.name);
-							next();}
+							if(err == null) logger.log('debug', "Null-Error in mongoose save function (category)");
+							else if(err == 11000) logger.log('debug', "Category already in DB!");
+							else {logger.log('debug', 'Category: '+newCat.name);
+							;}
 						});
-
+					next();
 					}, function(){
 						logger.log('debug', "All items saved to MongoDB!");
 					});	

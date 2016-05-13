@@ -22,7 +22,12 @@ or categrories; 1 = delete all product items and categories before starting fetc
 from Amazon*/
 var Taskmanager = require('./app/taskmanager');
 var task = new Taskmanager(1,1);
-task.start();
+//task.CreateQueries('DE');//generate new Queries in case
+//task.init();//delete all products before start querying session in case
+task.RunQueries('DE');//start fetching products
+
+
+
 
 /*function which brings the results from Amazon
 in the MongoDB to the Browser to confirm that data
